@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaia — Therapy & Wellbeing Center, Egypt</title>
+  <link rel="icon" type="image/jpeg" href="brand-assets/logo.jpg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:     '#F5EFE4',
+            sage:      '#AEACA3',
+            parchment: '#EDE5D6',
+            warm:      '#3D3530',
+            olive:     '#6B6349',
+            taupe:     '#8C7E6E',
+            blush:     '#D9CEBC',
+          },
+          fontFamily: {
+            display: ['Cormorant Garamond', 'serif'],
+            sans:    ['Jost', 'sans-serif'],
+            script:  ['Great Vibes', 'cursive'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --cream:      #F5EFE4;
+      --parchment:  #EDE5D6;
+      --sage:       #AEACA3;
+      --warm:       #3D3530;
+      --olive:      #6B6349;
+      --taupe:      #8C7E6E;
+      --blush:      #D9CEBC;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--warm);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── NAV ── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.6rem 4vw;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .4s, padding .4s, box-shadow .4s;
+    }
+    #navbar.scrolled {
+      background: rgba(245,239,228,.93);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding-top: .85rem; padding-bottom: .85rem;
+      box-shadow: 0 1px 0 rgba(61,53,48,.07);
+    }
+    .nav-logo { height: 44px; width: 44px; object-fit: cover; border-radius: 4px; }
+    .nav-links a {
+      font-family: 'Jost', sans-serif; font-weight: 400;
+      font-size: .74rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--warm); text-decoration: none; margin-left: 2.4rem;
+      opacity: .7; transition: opacity .2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-cta {
+      color: var(--cream) !important; background: var(--warm);
+      padding: .55rem 1.4rem; border-radius: 2px; opacity: 1 !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: var(--olive) !important; transform: translateY(-1px); }
+
+    /* ── HAMBURGER ── */
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--warm); transition: transform .25s, opacity .25s; }
+
+    /* ── MOBILE MENU ── */
+    #mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: var(--cream); z-index: 99;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.2rem;
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300;
+      color: var(--warm); text-decoration: none; letter-spacing: .02em; transition: color .2s;
+    }
+    #mobile-menu a:hover { color: var(--olive); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; position: relative;
+      display: flex; align-items: flex-end; padding-bottom: 8rem; overflow: hidden;
+    }
+    /* Center photo fills the entire hero */
+    .hero-bg-photo {
+      position: absolute; inset: 0;
+      background: url('brand-assets/center/gaia.png') center center / cover no-repeat;
+    }
+    /* Dark overlay so text is readable */
+    .hero-bg-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(30,24,20,.52) 0%,
+        rgba(30,24,20,.38) 40%,
+        rgba(30,24,20,.62) 100%
+      );
+    }
+
+    .hero-content { position: relative; z-index: 3; padding: 0 8vw; max-width: 660px; }
+
+    /* Override text colors for dark hero */
+    #hero .hero-eyebrow { color: rgba(245,239,228,.65); }
+    #hero .hero-eyebrow::before { background: rgba(245,239,228,.45); }
+    #hero .hero-title { color: var(--cream); }
+    #hero .hero-title em { color: var(--blush); }
+    #hero .hero-sub { color: rgba(245,239,228,.7); }
+    #hero .stat-num { color: var(--cream); }
+    #hero .stat-label { color: rgba(245,239,228,.55); }
+    #hero .stat-divider { background: rgba(245,239,228,.2); }
+    #hero .btn-ghost { color: var(--cream); border-color: rgba(245,239,228,.35); }
+    #hero .btn-ghost:hover { border-color: var(--cream); }
+    .hero-eyebrow {
+      font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--taupe); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: .8rem;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: var(--taupe); }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(3.6rem, 5.8vw, 6.4rem); line-height: 1.0;
+      letter-spacing: -.025em; color: var(--warm); margin-bottom: 1.8rem;
+    }
+    .hero-title em { font-style: italic; color: var(--olive); }
+    .hero-sub {
+      font-size: .88rem; font-weight: 300; color: var(--taupe);
+      line-height: 1.88; max-width: 400px; margin-bottom: 2.8rem;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .7rem;
+      font-family: 'Jost', sans-serif; font-size: .73rem; font-weight: 400;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--cream); background: var(--warm);
+      padding: .92rem 2.2rem; border-radius: 2px; text-decoration: none;
+      transition: background .25s, transform .2s;
+      box-shadow: 0 4px 20px rgba(61,53,48,.18);
+    }
+    .btn-primary:hover { background: var(--olive); transform: translateY(-2px); }
+    .btn-primary svg { width: 14px; height: 14px; transition: transform .2s; }
+    .btn-primary:hover svg { transform: translateX(3px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .7rem;
+      font-family: 'Jost', sans-serif; font-size: .73rem; font-weight: 400;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--warm); border: 1px solid rgba(61,53,48,.28);
+      padding: .92rem 2.2rem; border-radius: 2px; text-decoration: none; margin-left: 1.2rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .btn-ghost:hover { border-color: var(--warm); transform: translateY(-2px); }
+
+    .hero-stats { margin-top: 4.5rem; display: flex; gap: 2.8rem; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.6rem;
+      font-weight: 400; color: var(--warm); line-height: 1; margin-bottom: .2rem;
+    }
+    .stat-label { font-size: .68rem; letter-spacing: .17em; text-transform: uppercase; color: var(--taupe); }
+    .stat-divider { width: 1px; background: rgba(61,53,48,.14); align-self: stretch; }
+
+    /* ── SECTIONS ── */
+    .section    { padding: 7rem 7vw; }
+    .section-sm { padding: 4.5rem 7vw; }
+    .section-label {
+      font-size: .67rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--taupe); margin-bottom: .8rem;
+      display: flex; align-items: center; gap: .7rem;
+    }
+    .section-label::before { content: ''; width: 22px; height: 1px; background: var(--taupe); }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(2.3rem, 3.8vw, 3.9rem); line-height: 1.1;
+      letter-spacing: -.022em; color: var(--warm);
+    }
+    .section-title em { font-style: italic; color: var(--olive); }
+
+    /* ── ABOUT ── */
+    #about { background: var(--parchment); position: relative; overflow: hidden; }
+    #about::before {
+      content: ''; position: absolute;
+      width: 520px; height: 520px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(174,172,163,.16) 0%, transparent 70%);
+      right: -160px; top: -160px; pointer-events: none;
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img-main {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center 10%;
+      border-radius: 8px 8px 60% 8px; filter: saturate(.83);
+      box-shadow: 0 20px 64px rgba(61,53,48,.14);
+    }
+    .about-img-badge {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--warm); color: var(--cream);
+      padding: 1.4rem 1.8rem; border-radius: 4px; text-align: center;
+      box-shadow: 0 8px 32px rgba(61,53,48,.2);
+    }
+    .badge-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+      font-weight: 400; line-height: 1; display: block; letter-spacing: .04em;
+    }
+    .badge-text { font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; opacity: .65; margin-top: .35rem; }
+    .about-body p { font-size: .9rem; line-height: 1.88; color: var(--taupe); margin-bottom: 1.2rem; }
+    .cert-tags { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+    .cert-tag {
+      font-size: .67rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--warm); border: 1px solid rgba(61,53,48,.2);
+      padding: .42rem .95rem; border-radius: 2px;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--cream); }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px; background: rgba(61,53,48,.09);
+      border: 1.5px solid rgba(61,53,48,.09); border-radius: 6px; overflow: hidden;
+    }
+    .service-card {
+      background: var(--cream); padding: 2.8rem 2.2rem;
+      transition: background .3s; position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--olive); transition: width .4s;
+    }
+    .service-card:hover { background: var(--parchment); }
+    .service-card:hover::after { width: 100%; }
+    .service-icon { width: 38px; height: 38px; margin-bottom: 1.5rem; opacity: .55; }
+    .service-num { font-family: 'Cormorant Garamond', serif; font-size: .83rem; color: var(--taupe); letter-spacing: .1em; margin-bottom: .55rem; }
+    .service-name { font-family: 'Cormorant Garamond', serif; font-size: 1.48rem; font-weight: 400; color: var(--warm); margin-bottom: .65rem; line-height: 1.2; }
+    .service-desc { font-size: .81rem; color: var(--taupe); line-height: 1.75; }
+
+    /* ── APPROACH ── */
+    #approach { background: var(--warm); color: var(--cream); position: relative; overflow: hidden; }
+    #approach::before {
+      content: ''; position: absolute;
+      width: 600px; height: 600px; border-radius: 50%;
+      border: 1px solid rgba(245,239,228,.05);
+      top: -200px; right: -100px; pointer-events: none;
+    }
+    #approach::after {
+      content: ''; position: absolute;
+      width: 400px; height: 400px; border-radius: 50%;
+      border: 1px solid rgba(245,239,228,.04);
+      bottom: -150px; left: -80px; pointer-events: none;
+    }
+    .approach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; position: relative; z-index: 1; }
+    .approach-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(2.5rem, 4vw, 4.2rem); line-height: 1.08;
+      letter-spacing: -.022em; margin-bottom: 2rem; color: var(--cream);
+    }
+    .approach-title em { font-style: italic; color: var(--blush); }
+    .approach-body p { font-size: .87rem; line-height: 1.88; color: rgba(245,239,228,.6); margin-bottom: 1.2rem; }
+    .methods-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-top: 2.5rem; }
+    .method-item {
+      border: 1px solid rgba(245,239,228,.1); padding: 1.3rem 1.5rem;
+      border-radius: 4px; transition: border-color .25s, background .25s;
+    }
+    .method-item:hover { border-color: rgba(245,239,228,.26); background: rgba(245,239,228,.04); }
+    .method-abbr { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--blush); margin-bottom: .28rem; }
+    .method-name { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(245,239,228,.48); line-height: 1.5; }
+
+    /* ── TEAM ── */
+    #team { background: var(--parchment); }
+    .team-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 4rem; }
+    .team-intro { font-size: .87rem; line-height: 1.88; color: var(--taupe); }
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .team-card { position: relative; cursor: pointer; }
+    .team-photo-wrap {
+      aspect-ratio: 1/1; border-radius: 4px; overflow: hidden;
+      margin-bottom: 1rem; background: var(--parchment); position: relative;
+    }
+    .team-photo-wrap img {
+      width: 100%; height: 100%; object-fit: contain; object-position: center center;
+      filter: saturate(.82) sepia(.03); transition: transform .5s, filter .4s;
+    }
+    .team-card:hover .team-photo-wrap img { transform: scale(1.05); filter: saturate(.9) sepia(0); }
+    .team-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(61,53,48,.52) 100%);
+      opacity: 0; transition: opacity .35s;
+    }
+    .team-card:hover .team-overlay { opacity: 1; }
+    .team-ph {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--blush) 0%, var(--sage) 100%);
+    }
+    .team-ph span { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; color: rgba(255,255,255,.65); font-weight: 300; }
+    .team-name { font-family: 'Cormorant Garamond', serif; font-size: 1.18rem; font-weight: 400; color: var(--warm); margin-bottom: .18rem; }
+    .team-role { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--taupe); line-height: 1.5; }
+
+    /* ── WORKSHOPS ── */
+    #workshops { background: var(--cream); }
+    .workshops-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+    .workshops-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .workshop-card { position: relative; border-radius: 6px; overflow: hidden; aspect-ratio: 4/5; cursor: pointer; }
+    .workshop-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; filter: saturate(.85); }
+    .workshop-card:hover img { transform: scale(1.06); }
+    .workshop-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 28%, rgba(28,22,18,.78) 100%); }
+    .workshop-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.8rem; color: var(--cream); }
+    .workshop-tag { font-size: .64rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,239,228,.68); margin-bottom: .55rem; }
+    .workshop-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; line-height: 1.2; margin-bottom: .45rem; }
+    .workshop-meta { font-size: .73rem; color: rgba(245,239,228,.62); letter-spacing: .05em; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--parchment); text-align: center; }
+
+
+    /* ── CONTACT ── */
+    #contact { background: var(--cream); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: start; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.6rem; }
+    .contact-icon {
+      width: 36px; height: 36px; border: 1px solid rgba(61,53,48,.17); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-icon svg { width: 13px; height: 13px; opacity: .55; }
+    .contact-dtxt strong { display: block; font-size: .67rem; letter-spacing: .16em; text-transform: uppercase; color: var(--taupe); margin-bottom: .18rem; font-weight: 400; }
+    .contact-dtxt span { font-size: .9rem; color: var(--warm); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; }
+    .form-group label { font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--taupe); margin-bottom: .5rem; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: transparent; border: 1px solid rgba(61,53,48,.18); border-radius: 2px;
+      padding: .82rem 1rem; font-family: 'Jost', sans-serif;
+      font-size: .87rem; font-weight: 300; color: var(--warm); outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--taupe); }
+    .form-group textarea { resize: vertical; min-height: 108px; }
+    .form-group select { appearance: none; cursor: pointer; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--warm); color: rgba(245,239,228,.5); padding: 3.5rem 7vw; }
+    .footer-divider { height: 1px; background: rgba(245,239,228,.07); margin-bottom: 2.5rem; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { height: 38px; width: 38px; object-fit: cover; border-radius: 3px; opacity: .8; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(245,239,228,.42); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: rgba(245,239,228,.82); }
+    .footer-copy { font-size: .7rem; letter-spacing: .05em; }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity .72s cubic-bezier(.25,.8,.25,1), transform .72s cubic-bezier(.25,.8,.25,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .42s; }
+    .reveal-delay-5 { transition-delay: .54s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .team-grid { grid-template-columns: repeat(3, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      /* Nav */
+      #navbar { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      /* Hero */
+      #hero { align-items: center; padding: 8rem 0 4rem; }
+      .hero-content { max-width: 100%; padding: 0 1.4rem; }
+      .hero-title { font-size: clamp(2.6rem, 10vw, 3.4rem); }
+      .hero-sub { max-width: 100%; }
+      .hero-stats { gap: 1.2rem; flex-wrap: wrap; }
+      .stat-num { font-size: 2rem; }
+      #hero .btn-ghost { margin-left: 0; margin-top: .6rem; }
+
+      /* About */
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-img-badge { right: 0; bottom: -1rem; }
+
+      /* Services */
+      .services-grid { grid-template-columns: 1fr; }
+      .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+      /* Team */
+      .team-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .team-header { grid-template-columns: 1fr; gap: 1.2rem; }
+      .team-name { font-size: 1rem; }
+      .team-role { font-size: .62rem; }
+
+      /* Approach */
+      .approach-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .methods-grid { grid-template-columns: 1fr 1fr; }
+
+      /* Testimonials */
+      #testimonials > div > div[style*="repeat(3"] { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
+
+      /* Contact */
+      #contact > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
+
+      /* Footer */
+      .footer-inner { flex-direction: column; gap: 1.6rem; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
+
+      /* General */
+      .section { padding: 4rem 1.2rem; }
+      .btn-ghost { margin-left: 0; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.4rem; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .methods-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1rem; }
+      .stat-num { font-size: 1.8rem; }
+      #hero .hero-content { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <img src="brand-assets/logo.jpg" alt="Gaia" class="nav-logo" />
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#team">Our Team</a>
+    <a href="#contact" class="nav-cta">Book a Session</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu">
+  <a href="#about"      onclick="toggleMenu()">About</a>
+  <a href="#services"   onclick="toggleMenu()">Services</a>
+  <a href="#team"       onclick="toggleMenu()">Our Team</a>
+  <a href="#contact"    onclick="toggleMenu()">Book a Session</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-photo"></div>
+  <div class="hero-bg-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow reveal">Cairo, Egypt &nbsp;·&nbsp; Est. 2021</div>
+    <h1 class="hero-title reveal reveal-delay-1">
+      Healing starts<br />with being<br /><em>understood.</em>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      Gaia is a premium therapy and wellbeing center offering clinical psychology,
+      couples therapy, child development, and psychiatric care — grounded in
+      evidence-based practice, delivered with warmth.
+    </p>
+    <div class="reveal reveal-delay-3" style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
+      <a href="#contact" class="btn-primary">
+        Book a Consultation
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+
+    <div class="hero-stats reveal reveal-delay-4">
+      <div>
+        <div class="stat-num">19</div>
+        <div class="stat-label">Specialists</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div>
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Therapy Types</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Years of Care</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <img
+        class="about-img-main"
+        src="brand-assets/yasmin-portrait.png"
+        alt="Yasmin Magdy — Co-Founder & Director of Gaia"
+      />
+      <div class="about-img-badge">
+        <span class="badge-num">ICEEFT</span>
+        <div class="badge-text">Certified Member</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label reveal">Our Story</div>
+      <h2 class="section-title reveal reveal-delay-1">A space rooted<br />in <em>genuine connection.</em></h2>
+      <div style="height:1.8rem"></div>
+      <p class="about-body reveal reveal-delay-2" style="font-size:.9rem;line-height:1.88;color:var(--taupe);margin-bottom:1.2rem;">
+        Gaia Wellbeing was founded by <strong style="color:var(--warm);font-weight:400;">Yasmin Magdy</strong> — Senior
+        Clinical Psychologist, Marriage & Couples Therapist, and Addiction Counselor — with one vision:
+        to build a therapy center in Egypt where clients feel truly safe, seen, and supported.
+      </p>
+      <p style="font-size:.9rem;line-height:1.88;color:var(--taupe);margin-bottom:1.2rem;" class="reveal reveal-delay-2">
+        Drawing from CBT, DBT, EFT, and psychodynamic approaches, our team of 12+ specialists works
+        across individual, couples, child, and family therapy — always placing the human relationship
+        at the heart of care.
+      </p>
+      <p style="font-size:.9rem;line-height:1.88;color:var(--taupe);" class="reveal reveal-delay-3">
+        We are proud members of <strong style="color:var(--warm);font-weight:400;">ICEEFT</strong> and the
+        <strong style="color:var(--warm);font-weight:400;">Gottman Referral Network</strong> — two of the
+        most respected bodies in relational therapy worldwide.
+      </p>
+      <div class="cert-tags reveal reveal-delay-4">
+        <span class="cert-tag">ICEEFT Member</span>
+        <span class="cert-tag">Gottman Approved</span>
+        <span class="cert-tag">ACPP Egypt</span>
+        <span class="cert-tag">APA Affiliate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section">
+  <div class="services-header">
+    <div>
+      <div class="section-label reveal">What We Offer</div>
+      <h2 class="section-title reveal reveal-delay-1">Tailored care for<br /><em>every chapter of life.</em></h2>
+    </div>
+    <a href="#contact" class="btn-ghost reveal" style="margin-left:0;">Book a Session</a>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15">
+        <circle cx="20" cy="13" r="7"/><path d="M6 36c0-7.732 6.268-14 14-14s14 6.268 14 14"/>
+      </svg>
+      <div class="service-num">01</div>
+      <div class="service-name">Individual Therapy</div>
+      <div class="service-desc">One-on-one sessions for anxiety, depression, trauma, grief, OCD, and personality disorders. Evidence-based and deeply personal.</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15">
+        <circle cx="13" cy="13" r="6"/><circle cx="27" cy="13" r="6"/>
+        <path d="M1 36c0-6.627 5.373-12 12-12h14c6.627 0 12 5.373 12 12"/>
+      </svg>
+      <div class="service-num">02</div>
+      <div class="service-name">Couples & Marriage</div>
+      <div class="service-desc">EFT and Gottman Method sessions to rebuild trust, deepen connection, and navigate conflict with compassion.</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15">
+        <circle cx="20" cy="11" r="6"/>
+        <path d="M8 36c0-6.627 5.373-12 12-12s12 5.373 12 12"/>
+        <path d="M30 18c3 1 6 4 6 9"/><path d="M10 18c-3 1-6 4-6 9"/>
+      </svg>
+      <div class="service-num">03</div>
+      <div class="service-name">Child & Play Therapy</div>
+      <div class="service-desc">Specialized support for children using play-based, ABA, and CBT approaches to process emotions and thrive developmentally.</div>
+    </div>
+    <div class="service-card reveal">
+      <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15">
+        <path d="M20 4C11 4 5 10 5 18c0 5.2 2.7 9.8 7 12.2L10 36h20l-2-5.8C32.3 27.8 35 23.2 35 18 35 10 29 4 20 4z"/>
+      </svg>
+      <div class="service-num">04</div>
+      <div class="service-name">Addiction Counseling</div>
+      <div class="service-desc">Compassionate, non-judgmental recovery support integrating behavioral therapy, motivational interviewing, and relapse prevention.</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15">
+        <rect x="7" y="7" width="26" height="26" rx="3"/>
+        <path d="M14 20h12M20 14v12"/>
+      </svg>
+      <div class="service-num">05</div>
+      <div class="service-name">Psychiatric Care</div>
+      <div class="service-desc">Consultant-led psychiatric evaluation, diagnosis, and medication management for mood, anxiety, and complex conditions.</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.15">
+        <path d="M8 13h24M8 20h18M8 27h12"/>
+        <path d="M35 28l-6 6-3-3"/>
+      </svg>
+      <div class="service-num">06</div>
+      <div class="service-name">Workshops & Groups</div>
+      <div class="service-desc">Regular online and in-person workshops covering parenting, emotional regulation, child development, and movement-based wellbeing.</div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach" class="section">
+  <div class="approach-grid">
+    <div>
+      <div class="section-label reveal" style="color:rgba(245,239,228,.4)">Our Approach</div>
+      <h2 class="approach-title reveal reveal-delay-1">Science-led.<br /><em>Human-first.</em></h2>
+      <div class="approach-body">
+        <p class="reveal reveal-delay-2">
+          Every Gaia therapist is trained in at least two evidence-based modalities and works
+          from a deeply relational stance — because the therapeutic relationship itself is the
+          most powerful agent of change.
+        </p>
+        <p class="reveal reveal-delay-3">
+          We integrate cognitive, behavioral, and psychodynamic approaches with cultural
+          sensitivity, ensuring care that genuinely resonates within the Egyptian and broader
+          Middle Eastern context.
+        </p>
+      </div>
+    </div>
+    <div class="methods-grid reveal reveal-delay-2">
+      <div class="method-item"><div class="method-abbr">CBT</div><div class="method-name">Cognitive Behavioral Therapy</div></div>
+      <div class="method-item"><div class="method-abbr">DBT</div><div class="method-name">Dialectical Behavior Therapy</div></div>
+      <div class="method-item"><div class="method-abbr">EFT</div><div class="method-name">Emotionally Focused Therapy</div></div>
+      <div class="method-item"><div class="method-abbr">ABA</div><div class="method-name">Applied Behavior Analysis</div></div>
+      <div class="method-item"><div class="method-abbr">PDT</div><div class="method-name">Psychodynamic Therapy</div></div>
+      <div class="method-item"><div class="method-abbr">Play</div><div class="method-name">Play & Expressive Therapy</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="section">
+  <div class="team-header">
+    <div>
+      <div class="section-label reveal">Our Specialists</div>
+      <h2 class="section-title reveal reveal-delay-1">Clinicians who<br /><em>truly listen.</em></h2>
+    </div>
+    <p class="team-intro reveal reveal-delay-2">
+      Our team of 19 specialists spans clinical psychology, psychiatry, child development,
+      couples therapy, nutrition, and somatic therapy — each with international training
+      and a commitment to culturally sensitive, evidence-based care.
+    </p>
+  </div>
+
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/yasmin-magdy.png" alt="Yasmin Magdy" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Yasmin Magdy</div>
+      <div class="team-role">Co-Founder · Clinical Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/noha-micheal.png" alt="Noha Micheal" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Noha Micheal</div>
+      <div class="team-role">Senior Clinical Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/injy-defrawi.png" alt="Injy Defrawi" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Injy Defrawi</div>
+      <div class="team-role">Developmental Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-3">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/julie-bellian.png" alt="Julie Bellian" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Julie Bellian</div>
+      <div class="team-role">Child & Play Therapy</div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/maria.png" alt="Maria" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Maria</div>
+      <div class="team-role">Child & Young Adult Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/hala-abou-el-nasr.png" alt="Hala Abou El Nasr" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Hala Abou El Nasr</div>
+      <div class="team-role">Clinical Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/dr-khaled-dewan.png" alt="Dr. Khaled Dewan" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Dr. Khaled Dewan</div>
+      <div class="team-role">Functional Medicine Practitioner</div>
+    </div>
+    <div class="team-card reveal reveal-delay-3">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/imane-tazi.png" alt="Imane Tazi" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Imane Tazi</div>
+      <div class="team-role">Clinical Psychologist</div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/malak-el-shafaei.png" alt="Malak El Shafaei" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Malak El Shafaei</div>
+      <div class="team-role">Clinical Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/alia-el-ebiary.png" alt="Alia El Ebiary" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Alia El Ebiary</div>
+      <div class="team-role">Clinical Psychologist · APA Member</div>
+    </div>
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/shahd-omar.png" alt="Shahd Omar" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Shahd Omar</div>
+      <div class="team-role">Somatic Therapist & Psychotherapist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-3">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/karim-el-barbary.png" alt="Karim El Barbary" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Karim El Barbary</div>
+      <div class="team-role">Clinical Psychologist</div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/mariam-sidky.png" alt="Mariam Sidky" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Mariam Sidky</div>
+      <div class="team-role">Clinical Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/alia-el-meteni.png" alt="Alia El Meteni" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Alia El Meteni</div>
+      <div class="team-role">Counseling Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/dr-mina-faris.png" alt="Dr. Mina Faris" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Dr. Mina Faris</div>
+      <div class="team-role">Consultant Psychiatrist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-3">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/mariam-azzazi.png" alt="Mariam Azzazi" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Mariam Azzazi</div>
+      <div class="team-role">Child Psychologist · Behavior Analyst</div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/hana-habib.png" alt="Hana Habib" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Hana Habib</div>
+      <div class="team-role">Clinical Psychologist · Nutritionist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-1">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/dr-ghena-ismail.png" alt="Dr. Ghena Ismail" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Dr. Ghena Ismail</div>
+      <div class="team-role">Clinical & Forensic Psychologist</div>
+    </div>
+    <div class="team-card reveal reveal-delay-2">
+      <div class="team-photo-wrap">
+        <img src="brand-assets/engy-el-guindy.jpg" alt="Engy El Guindy" />
+        <div class="team-overlay"></div>
+      </div>
+      <div class="team-name">Engy El Guindy</div>
+      <div class="team-role">Child & Adolescent Psychologist</div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="section" style="background:var(--parchment);">
+  <div class="section-label reveal">What Our Clients Say</div>
+  <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:3.5rem;">Words that <em>stay with us.</em></h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;">
+
+    <div class="reveal" style="background:var(--cream);border-radius:6px;padding:2.4rem 2rem;position:relative;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;line-height:.5;color:var(--blush);margin-bottom:1.2rem;">"</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;font-weight:300;line-height:1.65;color:var(--warm);margin-bottom:1.5rem;">
+        For the first time in years, I felt like someone actually understood what I was going through — not just what I was saying, but what I wasn't able to say.
+      </p>
+      <div style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe);">— Anonymous Client, Cairo</div>
+    </div>
+
+    <div class="reveal reveal-delay-1" style="background:var(--cream);border-radius:6px;padding:2.4rem 2rem;position:relative;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;line-height:.5;color:var(--blush);margin-bottom:1.2rem;">"</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;font-weight:300;line-height:1.65;color:var(--warm);margin-bottom:1.5rem;">
+        Our couples therapist at Gaia helped us rediscover each other. We came in barely speaking. We left with a language we had never had before.
+      </p>
+      <div style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe);">— Anonymous Couple, Cairo</div>
+    </div>
+
+    <div class="reveal reveal-delay-2" style="background:var(--cream);border-radius:6px;padding:2.4rem 2rem;position:relative;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;line-height:.5;color:var(--blush);margin-bottom:1.2rem;">"</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;font-weight:300;line-height:1.65;color:var(--warm);margin-bottom:1.5rem;">
+        My son started play therapy at 4. Within three months, his teachers noticed the change. I cannot put into words what Gaia has given our family.
+      </p>
+      <div style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe);">— Anonymous Parent, Cairo</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section" style="background:var(--warm);">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative;z-index:1;">
+
+    <div>
+      <div class="section-label reveal" style="color:rgba(245,239,228,.4);">Get In Touch</div>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.3rem,3.8vw,3.9rem);line-height:1.1;letter-spacing:-.022em;color:var(--cream);margin-bottom:1.8rem;">
+        Begin your<br /><em style="font-style:italic;color:var(--blush);">journey today.</em>
+      </h2>
+      <p class="reveal reveal-delay-2" style="font-size:.9rem;line-height:1.88;color:rgba(245,239,228,.6);max-width:400px;">
+        We're here to help. Reach out via WhatsApp or Instagram and we'll get back to you within 24 hours to help you find the right specialist and schedule your first session.
+      </p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1.4rem;" class="reveal reveal-delay-2">
+      <!-- WhatsApp CTA -->
+      <a href="https://wa.me/201004636683" target="_blank" rel="noopener"
+         style="display:flex;align-items:center;gap:1.2rem;background:rgba(245,239,228,.06);border:1px solid rgba(245,239,228,.14);border-radius:4px;padding:1.6rem 2rem;text-decoration:none;transition:background .25s,border-color .25s;"
+         onmouseover="this.style.background='rgba(245,239,228,.1)';this.style.borderColor='rgba(245,239,228,.28)'"
+         onmouseout="this.style.background='rgba(245,239,228,.06)';this.style.borderColor='rgba(245,239,228,.14)'">
+        <div style="width:46px;height:46px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg viewBox="0 0 24 24" fill="white" style="width:22px;height:22px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:.67rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,239,228,.45);margin-bottom:.2rem;">WhatsApp</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--cream);">+20 100 463 6683</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:16px;height:16px;color:rgba(245,239,228,.3);margin-left:auto;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- Instagram CTA -->
+      <a href="https://www.instagram.com/youaregaia_eg" target="_blank" rel="noopener"
+         style="display:flex;align-items:center;gap:1.2rem;background:rgba(245,239,228,.06);border:1px solid rgba(245,239,228,.14);border-radius:4px;padding:1.6rem 2rem;text-decoration:none;transition:background .25s,border-color .25s;"
+         onmouseover="this.style.background='rgba(245,239,228,.1)';this.style.borderColor='rgba(245,239,228,.28)'"
+         onmouseout="this.style.background='rgba(245,239,228,.06)';this.style.borderColor='rgba(245,239,228,.14)'">
+        <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg viewBox="0 0 24 24" fill="white" style="width:20px;height:20px;"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="white" stroke-width="2"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" fill="white"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div style="font-size:.67rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,239,228,.45);margin-bottom:.2rem;">Instagram</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--cream);">@youaregaia_eg</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:16px;height:16px;color:rgba(245,239,228,.3);margin-left:auto;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <div style="display:flex;gap:2rem;margin-top:.4rem;">
+        <div style="display:flex;align-items:center;gap:.7rem;">
+          <div style="width:28px;height:28px;border:1px solid rgba(245,239,228,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;color:rgba(245,239,228,.45);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <span style="font-size:.78rem;color:rgba(245,239,228,.45);">Cairo, Egypt</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.7rem;">
+          <div style="width:28px;height:28px;border:1px solid rgba(245,239,228,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:11px;height:11px;color:rgba(245,239,228,.45);"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <span style="font-size:.78rem;color:rgba(245,239,228,.45);">In-person &amp; Online</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-divider"></div>
+  <div class="footer-inner">
+    <img src="brand-assets/logo.jpg" alt="Gaia" class="footer-logo" />
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2024 Gaia Wellbeing, Egypt. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const revEls = document.querySelectorAll('.reveal');
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+  revEls.forEach(el => revObs.observe(el));
+
+  // Trigger visible for above-fold elements
+  setTimeout(() => {
+    revEls.forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.92) el.classList.add('visible');
+    });
+  }, 80);
+
+</script>
+</body>
+</html>
