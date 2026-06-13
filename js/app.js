@@ -32,7 +32,6 @@ initAnchors();
 initNav();
 initVideos();
 initReveals();
-if (flags.finePointer && !flags.reduceMotion) initCursor();
 
 // Section showpieces live inside matchMedia branches so crossing the 1024px
 // breakpoint or toggling OS motion settings cleanly re-initializes them.
@@ -58,6 +57,10 @@ mm.add(
     initContact(opts);
   }
 );
+
+// Cursor + magnetic run after sections build so they catch the horizontal track
+// and the magnetic-tagged contact cards.
+if (flags.finePointer && !flags.reduceMotion) initCursor();
 
 // Reveal handoff: run the hero intro, release scroll, settle trigger positions.
 function onReveal() {

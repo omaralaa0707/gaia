@@ -17,6 +17,7 @@ export function initServices({ isDesktop, reduced } = {}) {
 
   const pin = document.createElement('div');
   pin.className = 'services-pin';
+  pin.setAttribute('data-cursor', 'Drag');
   const track = document.createElement('div');
   track.className = 'services-track';
 
