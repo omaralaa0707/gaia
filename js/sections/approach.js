@@ -38,8 +38,13 @@ export function initApproach({ isDesktop, reduced } = {}) {
     const v = addLayer(section, 'video', { className: 'scrub-fallback' });
     v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none';
     v.poster = 'assets/video/scrub/scrub-poster.jpg';
-    v.dataset.src = 'assets/video/scrub/scrub-loop-720.mp4'; // media manager already ran;
-    v.src = v.dataset.src; v.load(); const p = v.play(); if (p) p.catch(() => {});
+    // Save-data → poster only; otherwise load the ambient loop (media manager
+    // already ran, so wire this one up directly).
+    if (!flags.saveData) {
+      v.src = 'assets/video/scrub/scrub-loop-720.mp4';
+      v.load();
+      const p = v.play(); if (p) p.catch(() => {});
+    }
     addDim(section);
 
     const tl = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top 70%' }, defaults: { ease: 'power4.out' } });
