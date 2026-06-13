@@ -1,0 +1,8 @@
+_raw
+.git
+.claude
+.playwright-mcp
+.firecrawl
+node_modules
+*.bak
+serve.mjs
