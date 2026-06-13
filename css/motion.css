@@ -7,6 +7,8 @@
 /* ---- No-JS safety: only hide reveal elements when JS is present ---- */
 .js .reveal { opacity: 0; transform: translateY(26px); }
 .js .reveal.visible { opacity: 1; transform: none; }
+/* Elements GSAP fully controls must not also run the CSS reveal transition. */
+.reveal.gsap-managed { transition: none; }
 
 /* ---- PRELOADER ---- */
 #preloader { display: none; }
@@ -57,11 +59,12 @@ html.is-booting #preloader {
   position: relative; height: 52vh; min-height: 340px;
   overflow: hidden; background: var(--warm);
 }
+/* 130% tall, pulled up 15% so it stays centered. No translate-centering —
+   GSAP animates transform (yPercent/scale) and would clobber it. */
 .divider-band video,
 .divider-band .band-poster {
-  position: absolute; left: 50%; top: 50%;
+  position: absolute; left: 0; top: -15%;
   width: 100%; height: 130%;
-  transform: translate(-50%, -50%);
   object-fit: cover; will-change: transform;
 }
 .divider-band::after {
@@ -83,6 +86,7 @@ html.is-booting #preloader {
 /* ---- SERVICES pinned horizontal track ---- */
 .services-track-wrap { position: relative; }
 @media (min-width: 1024px) {
+  body.has-horizontal #services { padding: 0; }
   body.has-horizontal #services .services-grid { display: none; }
   .services-pin { height: 100vh; overflow: hidden; display: flex; align-items: center; }
   .services-track {
@@ -114,6 +118,8 @@ html.is-booting #preloader {
   .track-intro .section-label::before { background: rgba(245,239,228,.5); }
   .track-intro .section-title { color: var(--cream); }
   .track-intro .section-title em { color: var(--blush); }
+  .track-intro .btn-ghost { color: var(--cream); border-color: rgba(245,239,228,.4); margin: 1.6rem 0 0; }
+  .track-intro .btn-ghost:hover { border-color: var(--cream); }
   .services-progress {
     position: absolute; left: 7vw; right: 7vw; bottom: 7vh; height: 1px;
     background: rgba(61,53,48,.14);
@@ -125,10 +131,14 @@ html.is-booting #preloader {
 }
 
 /* ---- APPROACH scroll-scrub chapter ---- */
-.scrub-stage { position: relative; }
 .scrub-canvas {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; z-index: 0;
+  z-index: 0;
+  /* poster shows under the canvas until the first frames decode */
+  background: #2a221c url('../assets/video/scrub/scrub-poster.jpg') center / cover no-repeat;
+}
+@media (min-width: 1024px) {
+  #approach.has-scrub { min-height: 100vh; display: flex; align-items: center; }
 }
 .scrub-fallback {
   position: absolute; inset: 0; width: 100%; height: 100%;
