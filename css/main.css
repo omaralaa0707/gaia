@@ -312,8 +312,8 @@ footer { background: var(--warm); color: rgba(245,239,228,.5); padding: 3.5rem 7
 .footer-copy { font-size: .7rem; letter-spacing: .05em; }
 
 /* ── REVEAL ANIMATIONS ── */
+/* Hidden state lives in motion.css under `.js` so a no-JS page stays visible. */
 .reveal {
-  opacity: 0; transform: translateY(26px);
   transition: opacity .72s cubic-bezier(.25,.8,.25,1), transform .72s cubic-bezier(.25,.8,.25,1);
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
