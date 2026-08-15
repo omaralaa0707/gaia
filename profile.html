@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Therapist Profile | Gaia</title>
+<link rel="icon" type="image/jpeg" href="brand-assets/logo.jpg">
+<meta name="description" content="Meet the Gaia Wellbeing team.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F5EFE4; --parchment: #EDE5D6; --warm: #3D3530;
+    --taupe: #8C7E6E; --blush: #D9CEBC; --olive: #6B6349;
+  }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--warm); min-height: 100vh; }
+  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+  a { color: inherit; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 5vw; }
+  .topbar img { height: 34px; width: 34px; object-fit: cover; border-radius: 3px; }
+  .topbar-back { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--taupe); text-decoration: none; display: flex; align-items: center; gap: .5rem; }
+  .topbar-back:hover { color: var(--warm); }
+  .topbar-book { font-family: 'Jost', sans-serif; font-size: .73rem; letter-spacing: .16em; text-transform: uppercase; color: var(--cream); background: var(--warm); padding: .8rem 1.8rem; border-radius: 2px; text-decoration: none; }
+
+  .profile-wrap { max-width: 980px; margin: 0 auto; padding: 1rem 5vw 6rem; }
+  .profile-grid { display: grid; grid-template-columns: 300px 1fr; gap: 3.5rem; align-items: start; }
+
+  .profile-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 6px; background: var(--parchment); }
+  .profile-photo-empty { width: 100%; aspect-ratio: 3/4; border-radius: 6px; background: var(--parchment); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--blush); }
+
+  .profile-facts { margin-top: 1.6rem; border-top: 1px solid rgba(61,53,48,.12); padding-top: 1.4rem; }
+  .profile-fact { font-size: .82rem; color: var(--taupe); margin-bottom: .6rem; }
+  .profile-fact strong { color: var(--warm); font-weight: 500; display: block; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: .15rem; }
+
+  .profile-cta { display: block; text-align: center; margin-top: 1.6rem; font-size: .73rem; letter-spacing: .16em; text-transform: uppercase; color: var(--cream); background: var(--warm); padding: .95rem; border-radius: 2px; text-decoration: none; transition: background .2s; }
+  .profile-cta:hover { background: var(--olive); }
+
+  .profile-eyebrow { font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--taupe); margin-bottom: .6rem; }
+  .profile-name { font-size: clamp(2rem, 3.2vw, 2.8rem); margin-bottom: .3rem; }
+  .profile-role { font-size: .85rem; color: var(--taupe); letter-spacing: .04em; margin-bottom: 2.2rem; }
+  .profile-bio { font-size: .95rem; line-height: 1.9; color: var(--warm); white-space: pre-wrap; }
+  .profile-bio p { margin-bottom: 1.2rem; }
+  .profile-bio-empty { color: var(--taupe); font-style: italic; }
+
+  .profile-loading, .profile-error { text-align: center; padding: 6rem 0; color: var(--taupe); }
+  .profile-error a { color: var(--warm); text-decoration: underline; }
+
+  @media (max-width: 720px) {
+    .profile-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .profile-photo, .profile-photo-empty { max-width: 260px; margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html#team" class="topbar-back">
+    <img src="brand-assets/logo.jpg" alt="Gaia">
+    Back to Team
+  </a>
+  <a href="book.html" class="topbar-book">Book a Session</a>
+</div>
+
+<div class="profile-wrap" id="profile-wrap">
+  <div class="profile-loading">Loading profile&hellip;</div>
+</div>
+
+<script>
+(async function () {
+  const slug = new URLSearchParams(location.search).get('slug');
+  const wrap = document.getElementById('profile-wrap');
+  if (!slug) { showError('No therapist specified.'); return; }
+
+  let therapist;
+  try {
+    const res = await fetch(`/api/team?slug=${encodeURIComponent(slug)}`);
+    if (!res.ok) { showError('Therapist not found.'); return; }
+    ({ therapist } = await res.json());
+  } catch {
+    showError('Could not load this profile. Please try again.');
+    return;
+  }
+
+  document.getElementById('page-title').textContent = `${therapist.name} | Gaia`;
+
+  const photoHtml = therapist.photo_url
+    ? `<img class="profile-photo" src="${esc(therapist.photo_url)}" alt="${esc(therapist.name)}">`
+    : `<div class="profile-photo-empty">${esc((therapist.name || '?').charAt(0))}</div>`;
+
+  const details = Array.isArray(therapist.details) ? therapist.details : [];
+  const factsHtml = [{ label: 'Role', value: therapist.role }, ...details]
+    .filter(d => d.value)
+    .map(d => `<div class="profile-fact"><strong>${esc(d.label)}</strong>${esc(d.value)}</div>`)
+    .join('');
+
+  const bio = (therapist.bio || '').trim();
+  const bioHtml = bio
+    ? bio.split(/\n\n+/).map(p => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('')
+    : '<p class="profile-bio-empty">Full bio coming soon.</p>';
+
+  wrap.innerHTML = `
+    <div class="profile-grid">
+      <div>
+        ${photoHtml}
+        <div class="profile-facts">${factsHtml}</div>
+        <a href="book.html" class="profile-cta">Book with ${esc(therapist.name.split(' ')[0])}</a>
+      </div>
+      <div>
+        <div class="profile-eyebrow">Gaia Specialist</div>
+        <h1 class="profile-name">${esc(therapist.name)}</h1>
+        <div class="profile-role">${esc(therapist.role || '')}</div>
+        <div class="profile-bio">${bioHtml}</div>
+      </div>
+    </div>`;
+})();
+
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showError(msg) {
+  document.getElementById('profile-wrap').innerHTML =
+    `<div class="profile-error"><p>${msg}</p><p style="margin-top:1rem;"><a href="index.html#team">&larr; Back to the team</a></p></div>`;
+}
+</script>
+</body>
+</html>

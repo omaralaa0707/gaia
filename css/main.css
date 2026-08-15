@@ -276,7 +276,7 @@ body::before {
 .team-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 4rem; }
 .team-intro { font-size: .87rem; line-height: 1.88; color: var(--taupe); }
 .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-.team-card { position: relative; cursor: pointer; }
+.team-card { position: relative; cursor: pointer; display: block; text-decoration: none; }
 .team-photo-wrap {
   aspect-ratio: 1/1; border-radius: 4px; overflow: hidden;
   margin-bottom: 1rem; background: var(--parchment); position: relative;
@@ -310,6 +310,16 @@ footer { background: var(--warm); color: rgba(245,239,228,.5); padding: 3.5rem 7
 .footer-links a { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(245,239,228,.42); text-decoration: none; transition: color .2s; }
 .footer-links a:hover { color: rgba(245,239,228,.82); }
 .footer-copy { font-size: .7rem; letter-spacing: .05em; }
+
+.footer-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2.8rem; }
+.footer-branch-label { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(245,239,228,.4); margin-bottom: .5rem; }
+.footer-branch-address { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--cream); text-decoration: none; margin-bottom: 1rem; transition: color .2s; }
+.footer-branch-address:hover { color: var(--blush); }
+.footer-branches iframe { width: 100%; height: 180px; border: 0; border-radius: 4px; filter: grayscale(.2) contrast(1.05); }
+
+@media (max-width: 720px) {
+  .footer-branches { grid-template-columns: 1fr; gap: 1.8rem; }
+}
 
 /* ── REVEAL ANIMATIONS ── */
 /* Hidden state lives in motion.css under `.js` so a no-JS page stays visible. */
