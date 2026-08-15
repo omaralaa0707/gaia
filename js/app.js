@@ -13,6 +13,7 @@ import { initAbout } from './sections/about.js';
 import { initServices } from './sections/services.js';
 import { initApproach } from './sections/approach.js';
 import { initTeam } from './sections/team.js';
+import { initTeamModal } from './sections/team-modal.js';
 import { initTestimonials } from './sections/testimonials.js';
 import { initContact } from './sections/contact.js';
 import { initDividers } from './sections/dividers.js';
@@ -32,6 +33,7 @@ initAnchors();
 initNav();
 initVideos();
 initReveals();
+initTeamModal();
 
 // Section showpieces live inside matchMedia branches so crossing the 1024px
 // breakpoint or toggling OS motion settings cleanly re-initializes them.
