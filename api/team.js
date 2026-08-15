@@ -29,10 +29,10 @@ module.exports = async function handler(req, res) {
       .order('name');
 
     const { service } = req.query;
-    // specialties is jsonb, not a Postgres array — .contains() must get a JSON
+    // specialties is jsonb, not a Postgres array - .contains() must get a JSON
     // string here or it serializes as `cs.{service}` (array-literal syntax),
     // which Postgres rejects with "invalid input syntax for type json". (This
-    // exact bug 500'd every ACPP service page until fixed — avoiding it here
+    // exact bug 500'd every ACPP service page until fixed - avoiding it here
     // from the start.)
     if (service) query = query.contains('specialties', JSON.stringify([service]));
 

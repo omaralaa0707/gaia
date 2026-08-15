@@ -62,7 +62,7 @@ export function initApproach({ isDesktop, reduced } = {}) {
   addDim(section);
   const ctx = canvas.getContext('2d');
 
-  const blobs = new Array(FRAME_COUNT);        // small (~64KB each) — keep all
+  const blobs = new Array(FRAME_COUNT);        // small (~64KB each) - keep all
   const bitmaps = new Map();                   // decoded, windowed ±15
   let currentIndex = 0;
   let dims = { w: 0, h: 0 };

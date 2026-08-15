@@ -1,6 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 
-// Public endpoint — no auth required.
+// Public endpoint - no auth required.
 // Returns active therapists with their available weekly slots for the next 14 days.
 // Single-location version of ACPP's api/therapists.js (no branch/district5 split).
 
@@ -38,7 +38,7 @@ module.exports = async function handler(req, res) {
       (bookings || []).map(b => `${b.preferred_therapist_id}|${b.booked_date}|${b.booked_time}`)
     );
 
-    // Google Calendar freebusy — checks each therapist's real calendar for
+    // Google Calendar freebusy - checks each therapist's real calendar for
     // events not recorded in our own submissions table (e.g. personal
     // appointments they added directly in Google Calendar).
     const busyByCalendar = await fetchBusyByCalendar(therapists || [], todayStr, endStr);
@@ -251,7 +251,7 @@ function computeSlots(therapistId, weeklySlots, bookedSet, busyIntervalsAll) {
         mode:        slotMode,
         displayDate,
         displayTime,
-        label: `${displayDate} · ${displayTime} — ${modeLabel}`,
+        label: `${displayDate} · ${displayTime} - ${modeLabel}`,
       });
     }
   }

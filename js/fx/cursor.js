@@ -1,5 +1,5 @@
 // Custom cursor (dot + trailing ring) and magnetic buttons. Desktop fine-pointer
-// only — the caller already gates on (hover:hover) and (pointer:fine).
+// only - the caller already gates on (hover:hover) and (pointer:fine).
 
 export function initCursor() {
   const dot = document.createElement('div');

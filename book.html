@@ -243,7 +243,7 @@
       <p class="required-note" style="margin-bottom:1.5rem;">Are you a new client, or already working with us?</p>
       <div style="display:flex; flex-direction:column; gap:0.8rem;">
         <button class="btn-next" onclick="chooseMode('new')">I'm a New Client</button>
-        <button class="btn-back" onclick="chooseMode('existing')">I'm an Existing Client — Rebook a Session</button>
+        <button class="btn-back" onclick="chooseMode('existing')">I'm an Existing Client - Rebook a Session</button>
       </div>
     </div>
 
@@ -406,19 +406,19 @@
               <label for="timezone">Time Zone *</label>
               <select id="timezone">
                 <option value="">Select time zone...</option>
-                <option value="Africa/Cairo (UTC+2) — Egypt">Egypt (UTC+2)</option>
-                <option value="Asia/Riyadh (UTC+3) — Saudi Arabia">Saudi Arabia (UTC+3)</option>
-                <option value="Asia/Dubai (UTC+4) — UAE">UAE (UTC+4)</option>
-                <option value="Asia/Kuwait (UTC+3) — Kuwait">Kuwait (UTC+3)</option>
-                <option value="Asia/Qatar (UTC+3) — Qatar">Qatar (UTC+3)</option>
-                <option value="Asia/Beirut (UTC+2/3) — Lebanon">Lebanon (UTC+2/3)</option>
-                <option value="Asia/Amman (UTC+2/3) — Jordan">Jordan (UTC+2/3)</option>
-                <option value="Europe/London (UTC+0/1) — UK">UK (UTC+0/1)</option>
-                <option value="Europe/Paris (UTC+1/2) — France / Central Europe">Central Europe (UTC+1/2)</option>
-                <option value="America/New_York (UTC-5/-4) — US Eastern">US Eastern (UTC-5/-4)</option>
-                <option value="America/Chicago (UTC-6/-5) — US Central">US Central (UTC-6/-5)</option>
-                <option value="America/Los_Angeles (UTC-8/-7) — US Pacific">US Pacific (UTC-8/-7)</option>
-                <option value="Australia/Sydney (UTC+10/11) — Australia Eastern">Australia Eastern</option>
+                <option value="Africa/Cairo (UTC+2) - Egypt">Egypt (UTC+2)</option>
+                <option value="Asia/Riyadh (UTC+3) - Saudi Arabia">Saudi Arabia (UTC+3)</option>
+                <option value="Asia/Dubai (UTC+4) - UAE">UAE (UTC+4)</option>
+                <option value="Asia/Kuwait (UTC+3) - Kuwait">Kuwait (UTC+3)</option>
+                <option value="Asia/Qatar (UTC+3) - Qatar">Qatar (UTC+3)</option>
+                <option value="Asia/Beirut (UTC+2/3) - Lebanon">Lebanon (UTC+2/3)</option>
+                <option value="Asia/Amman (UTC+2/3) - Jordan">Jordan (UTC+2/3)</option>
+                <option value="Europe/London (UTC+0/1) - UK">UK (UTC+0/1)</option>
+                <option value="Europe/Paris (UTC+1/2) - France / Central Europe">Central Europe (UTC+1/2)</option>
+                <option value="America/New_York (UTC-5/-4) - US Eastern">US Eastern (UTC-5/-4)</option>
+                <option value="America/Chicago (UTC-6/-5) - US Central">US Central (UTC-6/-5)</option>
+                <option value="America/Los_Angeles (UTC-8/-7) - US Pacific">US Pacific (UTC-8/-7)</option>
+                <option value="Australia/Sydney (UTC+10/11) - Australia Eastern">Australia Eastern</option>
                 <option value="Other">Other</option>
               </select>
               <span class="field-error" id="err-timezone">Please select your time zone.</span>
@@ -520,8 +520,8 @@
         <h4>Payment</h4>
         <div class="payment-box" id="ex-payment-box-auto">
           <p>Please send your session payment via InstaPay, then attach a screenshot of the payment below.</p>
-          <a href="https://ipn.eg/S/PLACEHOLDER/instapay/PLACEHOLDER" target="_blank" rel="noopener" class="payment-link-btn">Click to Pay via InstaPay →</a>
-          <p style="margin-top:0.7rem;margin-bottom:0;">Send to <strong>PLACEHOLDER@instapay</strong> · Powered by InstaPay</p>
+          <a href="https://ipn.eg/S/acpp.gaia.paymentlink/instapay/5K3ZMO" target="_blank" rel="noopener" class="payment-link-btn">Click to Pay via InstaPay →</a>
+          <p style="margin-top:0.7rem;margin-bottom:0;">Send to <strong>acpp.gaia.paymentlink@instapay</strong> · Powered by InstaPay</p>
         </div>
         <div class="form-group full payment-proof-input" id="ex-payment-proof-wrap">
           <label for="exPaymentProof">Attach payment screenshot *</label>
@@ -572,8 +572,8 @@
         <h4>Payment</h4>
         <div class="payment-box" id="payment-box-auto">
           <p>Please send your session payment via InstaPay, then attach a screenshot of the payment below.</p>
-          <a href="https://ipn.eg/S/PLACEHOLDER/instapay/PLACEHOLDER" target="_blank" rel="noopener" class="payment-link-btn">Click to Pay via InstaPay →</a>
-          <p style="margin-top:0.7rem;margin-bottom:0;">Send to <strong>PLACEHOLDER@instapay</strong> · Powered by InstaPay</p>
+          <a href="https://ipn.eg/S/acpp.gaia.paymentlink/instapay/5K3ZMO" target="_blank" rel="noopener" class="payment-link-btn">Click to Pay via InstaPay →</a>
+          <p style="margin-top:0.7rem;margin-bottom:0;">Send to <strong>acpp.gaia.paymentlink@instapay</strong> · Powered by InstaPay</p>
         </div>
         <div class="form-group full payment-proof-input" id="payment-proof-wrap">
           <label for="paymentProof">Attach payment screenshot *</label>
@@ -744,7 +744,7 @@ function exGoNext(currentExStep) {
   showExStep(currentExStep + 1);
 }
 
-// step-4's nav buttons are shared between both flows — route based on mode
+// step-4's nav buttons are shared between both flows - route based on mode
 function step4Back() {
   if (mode === 'existing') exGoBack(3);
   else goBack(4);
@@ -861,7 +861,7 @@ function renderTherapists() {
   nsCard.onclick = () => selectTherapistCard(null, nsCard, 'notsure');
   grid.appendChild(nsCard);
 
-  // Individual therapist cards — hide anyone who doesn't see the patient's selected gender
+  // Individual therapist cards - hide anyone who doesn't see the patient's selected gender
   const genderPref = chipSelections['gender']; // 'Male' | 'Female' | 'No preference' | undefined
   const visibleTherapists = (genderPref === 'Male' || genderPref === 'Female')
     ? therapistData.filter(t => !t.accepts_gender || t.accepts_gender === 'all' || t.accepts_gender === genderPref.toLowerCase())

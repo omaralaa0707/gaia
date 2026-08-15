@@ -1,4 +1,4 @@
-// Decorative video divider bands — parallax + scale on scroll. No copy (aria-hidden).
+// Decorative video divider bands - parallax + scale on scroll. No copy (aria-hidden).
 
 export function initDividers({ reduced } = {}) {
   if (reduced) return;

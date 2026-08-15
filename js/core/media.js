@@ -2,7 +2,7 @@
 // Ambient videos ship as <video preload="none" poster ...> with data-src (and
 // optional data-src-mobile). We inject the source only when the element nears the
 // viewport, then play/pause via a tighter observer. If richMedia is false
-// (reduced-motion / save-data) we never inject anything — the poster stands alone.
+// (reduced-motion / save-data) we never inject anything - the poster stands alone.
 
 import { flags } from './flags.js';
 

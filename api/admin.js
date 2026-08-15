@@ -63,7 +63,7 @@ module.exports = async function handler(req, res) {
 // ── GET handlers ──────────────────────────────────────────────
 // NOTE: GET actions live ONLY here, POST actions ONLY in handlePost below.
 // ACPP's #1 recurring bug was the frontend calling apiFetch (GET) for an
-// action that only exists in handlePost (or vice versa) — silently returning
+// action that only exists in handlePost (or vice versa) - silently returning
 // "Unknown action". Keep every new admin-panel action's apiFetch/apiPost call
 // site matched to the handler it's actually defined in, here.
 
@@ -307,7 +307,7 @@ async function handlePost(action, body) {
         full_name: 'Sara Ahmed', age: '28', session_type: 'In-person',
         preferred_days: 'Mon / Wed mornings', reason: 'Anxiety and stress management',
         goals: 'Better coping skills', prev_therapy: 'No', medication: 'No',
-        diagnoses: '—', preferred_language: 'English', preferred_gender: 'No preference', extra: '—',
+        diagnoses: '-', preferred_language: 'English', preferred_gender: 'No preference', extra: '-',
       };
       html = buildTherapistEmailHtml({
         therapistName: 'Yasmin Magdy',
@@ -337,7 +337,7 @@ async function handlePost(action, body) {
       .from('submissions').update({ state: 'Cancelled' }).eq('id', submissionId);
     if (error) return { error: error.message };
 
-    // Must await before returning — Vercel can freeze/terminate this function's
+    // Must await before returning - Vercel can freeze/terminate this function's
     // execution as soon as the response is sent, silently killing any
     // calendar/email work still in flight if it were left as fire-and-forget.
     if (sub.event_id && sub.assigned_calendar_id) {
@@ -386,7 +386,7 @@ async function handlePost(action, body) {
 }
 
 // ── Available slots (weekly_slots–based, no Google Calendar freebusy) ─
-// Single-location version of ACPP's getAvailableSlots — one calendar_id,
+// Single-location version of ACPP's getAvailableSlots - one calendar_id,
 // no branch parameter/filtering.
 
 async function getAvailableSlots(therapistId) {
@@ -589,7 +589,7 @@ async function confirmBooking(db, data) {
       });
       eventId = event.data.id;
     } catch (err) {
-      // Calendar failed — still save booking to DB
+      // Calendar failed - still save booking to DB
       console.error('[admin] confirmBooking: calendar event creation failed:', err.message);
     }
   }
@@ -611,7 +611,7 @@ async function confirmBooking(db, data) {
   const dateStr = formatCairo(start, 'date');
   const timeStr = formatCairo(start, 'time');
 
-  // Must await before returning — Vercel can freeze/terminate this function's
+  // Must await before returning - Vercel can freeze/terminate this function's
   // execution as soon as the response is sent, silently killing any email
   // work still in flight if it were left as fire-and-forget.
   await Promise.all([
@@ -656,7 +656,7 @@ async function confirmBooking(db, data) {
 // ── Email template helpers ────────────────────────────────────
 
 const DEFAULT_PATIENT_SUBJECT   = 'Your Gaia Appointment is Confirmed';
-const DEFAULT_THERAPIST_SUBJECT = 'New Appointment: {{clientName}} — {{date}} at {{time}}';
+const DEFAULT_THERAPIST_SUBJECT = 'New Appointment: {{clientName}} - {{date}} at {{time}}';
 
 function buildClientTableRows(sub) {
   const rows = [
@@ -672,7 +672,7 @@ function buildClientTableRows(sub) {
     ['Preferred language',         sub.preferred_language],
     ['Preferred therapist gender', sub.preferred_gender],
     ['Additional notes',           sub.extra],
-  ].filter(([, v]) => v && v !== '—');
+  ].filter(([, v]) => v && v !== '-');
   return rows.map(([label, value]) => `
     <tr>
       <td style="padding:10px 16px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#8C7E6E;width:38%;border-bottom:1px solid #EDE5D6;vertical-align:top;">${label}</td>
@@ -715,7 +715,7 @@ async function sendTherapistEmail({ therapistEmail, therapistName, date, time, s
   await m.transporter.sendMail({
     from:    `"Gaia" <${m.user}>`,
     to:      therapistEmail,
-    subject: subject || `New Appointment: ${sub.full_name || 'New Client'} — ${date} at ${time}`,
+    subject: subject || `New Appointment: ${sub.full_name || 'New Client'} - ${date} at ${time}`,
     html,
   });
 }
@@ -739,7 +739,7 @@ function buildPatientEmailHtml({ clientName, therapistName, date, time, sessionT
        </td></tr>`
     : `<tr><td colspan="2" style="padding-top:18px;">
         <div style="background:#F0F9F0;border-left:4px solid #6B6349;border-radius:0 8px 8px 0;padding:14px 16px;">
-          <p style="margin:0 0 4px;font-size:13px;color:#3D3530;"><strong>📍 In-person session — Gaia</strong></p>
+          <p style="margin:0 0 4px;font-size:13px;color:#3D3530;"><strong>📍 In-person session - Gaia</strong></p>
           <p style="margin:0 0 8px;font-size:13px;color:#3D3530;">${GAIA_ADDRESS}</p>
           <a href="${GAIA_MAPS_URL}" style="color:#6B6349;font-size:13px;text-decoration:none;font-weight:600;">View on Google Maps →</a>
         </div>
@@ -909,7 +909,7 @@ function buildTherapistEmailHtml({ therapistName, date, time, sessionType, sub, 
 
 // ── Helpers ───────────────────────────────────────────────────
 
-// TODO(owner): placeholder weekly hours — replace via the admin panel once
+// TODO(owner): placeholder weekly hours - replace via the admin panel once
 // real per-therapist Gaia availability is provided (Phase 1).
 function defaultHours() {
   return {
@@ -918,7 +918,7 @@ function defaultHours() {
     "2": { start: "10:00", end: "20:00" },  // Tuesday
     "3": { start: "10:00", end: "20:00" },  // Wednesday
     "4": { start: "10:00", end: "20:00" },  // Thursday
-    "5": null,                              // Friday — off
+    "5": null,                              // Friday - off
     "6": { start: "10:00", end: "20:00" },  // Saturday
   };
 }
@@ -947,7 +947,7 @@ async function sendCancellationEmail(sub, reason) {
   await m.transporter.sendMail({
     from:    `"Gaia" <${m.user}>`,
     to:      sub.email,
-    subject: 'Your Gaia Appointment — Update',
+    subject: 'Your Gaia Appointment - Update',
     html,
   });
 }
@@ -966,7 +966,7 @@ async function sendTherapistCancellationEmail(sub, therapistEmail, reason) {
   await m.transporter.sendMail({
     from:    `"Gaia" <${m.user}>`,
     to:      therapistEmail,
-    subject: `Appointment Cancelled: ${sub.full_name || 'Client'} — ${sub.booked_date || ''}`,
+    subject: `Appointment Cancelled: ${sub.full_name || 'Client'} - ${sub.booked_date || ''}`,
     html,
   });
 }

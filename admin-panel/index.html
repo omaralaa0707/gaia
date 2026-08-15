@@ -400,7 +400,7 @@ body { font-family: 'Jost', sans-serif; background: #EEF1F5; color: var(--warm);
         <div class="section" id="section-bookings-pending">
           <div class="section-header">
             <h2>Queue</h2>
-            <span style="font-size:0.78rem;color:var(--muted);">Patients who selected "Not sure" — review their intake and assign a therapist</span>
+            <span style="font-size:0.78rem;color:var(--muted);">Patients who selected "Not sure" - review their intake and assign a therapist</span>
           </div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
             <button id="pending-bulk-btn" class="add-btn" style="display:none;" onclick="bulkMarkExistingPatients()">
@@ -757,7 +757,7 @@ body { font-family: 'Jost', sans-serif; background: #EEF1F5; color: var(--warm);
       <div id="client-modal-sessions" style="margin-bottom:16px;"></div>
 
       <span class="modal-section-label">Admin Notes</span>
-      <textarea id="client-modal-notes" rows="4" placeholder="Internal notes — not visible to the client" style="width:100%;resize:vertical;padding:10px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;font-family:inherit;background:var(--bg);color:var(--text);line-height:1.5;"></textarea>
+      <textarea id="client-modal-notes" rows="4" placeholder="Internal notes - not visible to the client" style="width:100%;resize:vertical;padding:10px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;font-family:inherit;background:var(--bg);color:var(--text);line-height:1.5;"></textarea>
     </div>
     <div class="modal-footer">
       <button class="modal-btn primary" onclick="saveClientDetails()">Save</button>
@@ -921,7 +921,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const API  = '/api/admin';
 const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-// Service-page slug -> label. Keys match services/<slug>.html filenames 1:1 —
+// Service-page slug -> label. Keys match services/<slug>.html filenames 1:1 -
 // a therapist tagged with a slug here shows up on that page automatically.
 const SERVICES = [
   ['adoption-support', 'Adoption Support'],
@@ -1135,7 +1135,7 @@ function updatePendingBulkBtn() {
 async function bulkMarkExistingPatients() {
   const ids = [...pendingSelected];
   if (!ids.length) return;
-  if (!confirm(`Mark ${ids.length} submission(s) as existing patients? They'll be labeled "Recurring" and moved out of the queue — no confirmation email or calendar event will be sent.`)) return;
+  if (!confirm(`Mark ${ids.length} submission(s) as existing patients? They'll be labeled "Recurring" and moved out of the queue - no confirmation email or calendar event will be sent.`)) return;
 
   const btn = document.getElementById('pending-bulk-btn');
   btn.disabled = true;
@@ -1434,7 +1434,7 @@ async function openSubmissionModal(id) {
         <p class="concern-block">${s.reason || '-'}</p>
       </div>
       <div class="modal-info-item full"><label>Goals for therapy</label><p>${s.goals || '-'}</p></div>
-      ${s.extra && s.extra !== '—' && s.extra !== '-' ? `<div class="modal-info-item full"><label>Additional Notes</label><p>${s.extra}</p></div>` : ''}
+      ${s.extra && s.extra !== '-' ? `<div class="modal-info-item full"><label>Additional Notes</label><p>${s.extra}</p></div>` : ''}
     </div>
 
     <span class="modal-section-label">Medical History</span>
@@ -2119,7 +2119,7 @@ function statePill(state) {
 
 // ── Content (CMS) ────────────────────────────────────────────
 // Gaia's marketing site is a single-page index.html (with #about/#services/#team
-// anchor sections), unlike ACPP's separate about.html/services.html/our-team.html —
+// anchor sections), unlike ACPP's separate about.html/services.html/our-team.html -
 // so only these two real pages are listed. Content CMS slots (content-slots.json)
 // still need to be authored to match Gaia's actual markup before this tab is useful.
 const PAGE_PATHS = {
@@ -2208,7 +2208,7 @@ async function saveContentEdit() {
     });
     result = await res.json();
   } catch (err) {
-    alert('Save failed — network error. Your edit is still in the box; check your connection and click Save again.');
+    alert('Save failed - network error. Your edit is still in the box; check your connection and click Save again.');
     return; // popup stays open with the edit intact, ready to retry
   }
 
@@ -2245,7 +2245,7 @@ async function loadContentHistory(slotId) {
   lastHistoryVersions = versions || [];
   el.innerHTML = versions.map((v, i) => `
     <div style="display:flex; justify-content:space-between; gap:8px; padding:4px 0; border-top:1px solid #eee;">
-      <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:200px;">${new Date(v.created_at).toLocaleString()} — ${escapeHtml(v.value)}</span>
+      <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:200px;">${new Date(v.created_at).toLocaleString()} - ${escapeHtml(v.value)}</span>
       <a href="#" onclick="restoreContentVersion(${JSON.stringify(slotId)}, ${i}); return false;">Restore</a>
     </div>
   `).join('');

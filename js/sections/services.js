@@ -1,5 +1,5 @@
 // Services: desktop builds a pinned horizontal gallery from the existing grid
-// (single source of truth — mobile/no-JS keep the vertical grid). The 6 cards are
+// (single source of truth - mobile/no-JS keep the vertical grid). The 6 cards are
 // MOVED (not cloned) into a track behind a video intro panel.
 
 export function initServices({ isDesktop, reduced } = {}) {

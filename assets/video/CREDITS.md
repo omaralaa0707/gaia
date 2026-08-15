@@ -1,7 +1,7 @@
 # Video Asset Credits
 
 All clips sourced from [Pexels](https://www.pexels.com) under the
-[Pexels License](https://www.pexels.com/license/) — free for commercial use,
+[Pexels License](https://www.pexels.com/license/) - free for commercial use,
 no attribution required. Credits listed here as good practice.
 
 Each master was downloaded to the gitignored `_raw/` folder, then trimmed,

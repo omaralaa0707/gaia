@@ -2,7 +2,7 @@ const { createClient } = require('@supabase/supabase-js');
 
 // Called once daily by Vercel Cron (Hobby plan doesn't allow hourly crons).
 // Sends a reminder email to any confirmed patient whose session is 24-48
-// hours away (Cairo time, DST-aware) — a wide window so a single daily run
+// hours away (Cairo time, DST-aware) - a wide window so a single daily run
 // still reaches every booking exactly once.
 
 const GAIA_WHATSAPP  = 'https://wa.me/201004636683';
@@ -48,7 +48,7 @@ module.exports = async function handler(req, res) {
     try {
       const sent = await sendReminderEmail(b);
       if (!sent) {
-        console.error(`[send-reminders] email not sent for submission ${b.id} (${b.full_name}) — see prior log for reason; reminder_sent NOT set, will retry next run`);
+        console.error(`[send-reminders] email not sent for submission ${b.id} (${b.full_name}) - see prior log for reason; reminder_sent NOT set, will retry next run`);
         results.push({ id: b.id, name: b.full_name, status: 'skipped' });
         continue;
       }

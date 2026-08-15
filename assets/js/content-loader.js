@@ -21,11 +21,11 @@
         if (!slots) return;
         for (const [slotId, value] of Object.entries(slots)) {
           const el = document.querySelector(`[data-slot="${slotId}"]`);
-          if (!el) continue; // page/manifest drift — fail soft, keep static content
+          if (!el) continue; // page/manifest drift - fail soft, keep static content
           applyValue(el, slotType(el), value);
         }
       })
-      .catch(() => {}); // network failure — page keeps its last-known-good static content
+      .catch(() => {}); // network failure - page keeps its last-known-good static content
   }
 
   hydrate();

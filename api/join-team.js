@@ -2,12 +2,12 @@ const fs = require('fs');
 const nodemailer = require('nodemailer');
 const { formidable } = require('formidable');
 
-// Public endpoint — no auth required.
+// Public endpoint - no auth required.
 // Receives a job application (with CV attachment) and emails it via nodemailer.
 //
 // NOTE(owner): ported for parity with ACPP's careers flow, but Gaia's
 // marketing site has no join-our-team.html form yet to submit to this
-// endpoint. This is a no-op until that page exists — let me know if you
+// endpoint. This is a no-op until that page exists - let me know if you
 // want a careers page built for Gaia too.
 
 const RECIPIENT = 'PLACEHOLDER@gmail.com'; // TODO(owner): who receives applications
@@ -58,7 +58,7 @@ module.exports = async function handler(req, res) {
       from:    `"Gaia Careers" <${m.user}>`,
       to:      RECIPIENT,
       replyTo: email,
-      subject: `New ${department} Job Application | Gaia — ${fullName}`,
+      subject: `New ${department} Job Application | Gaia - ${fullName}`,
       html:    buildApplicationEmailHtml({ fullName, email, phone, coverLetter, department, role }),
       attachments: [{
         filename: cvFile.originalFilename || 'CV',

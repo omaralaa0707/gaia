@@ -1,6 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 
-// Public endpoint — no auth required.
+// Public endpoint - no auth required.
 // Receives homepage feedback submissions and stores them for review in the
 // admin panel's Feedback tab.
 

@@ -1,5 +1,5 @@
 /* ============================================================
-   MOTION LAYER — preloader, video showpieces, cursor, pins.
+   MOTION LAYER - preloader, video showpieces, cursor, pins.
    Loaded after main.css. All "hidden" states are gated behind
    .js so a no-JS page (or crawler) renders fully visible.
    ============================================================ */
@@ -59,7 +59,7 @@ html.is-booting #preloader {
   position: relative; height: 52vh; min-height: 340px;
   overflow: hidden; background: var(--warm);
 }
-/* 130% tall, pulled up 15% so it stays centered. No translate-centering —
+/* 130% tall, pulled up 15% so it stays centered. No translate-centering -
    GSAP animates transform (yPercent/scale) and would clobber it. */
 .divider-band video,
 .divider-band .band-poster {

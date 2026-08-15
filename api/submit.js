@@ -1,6 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 
-// Public endpoint — no auth required.
+// Public endpoint - no auth required.
 // Handles both auto-bookings (specific therapist + slot) and manual referrals.
 
 const GAIA_WHATSAPP   = 'https://wa.me/201004636683';
@@ -27,7 +27,7 @@ module.exports = async function handler(req, res) {
 
   // Payment is only collected when the patient picked a specific therapist
   // (known price). "Not sure, match me" referrals don't know their therapist
-  // or price yet, so no proof is required — payment gets arranged once admin
+  // or price yet, so no proof is required - payment gets arranged once admin
   // manually assigns and confirms them.
   const paymentRequired = !!data.preferredTherapistId;
   let paymentProofUrl = null;
@@ -60,7 +60,7 @@ module.exports = async function handler(req, res) {
     }
   }
 
-  // Fetch therapist details needed for auto-booking (single location — no branch lookup)
+  // Fetch therapist details needed for auto-booking (single location - no branch lookup)
   let calendarId     = null;
   let therapistEmail = null;
   if (isAuto && data.preferredTherapistId) {
@@ -137,7 +137,7 @@ module.exports = async function handler(req, res) {
     // If the session turns out to be one-time, admin can re-add it manually.
     afterTasks.push(removeBookedWeeklySlot(db, data.preferredTherapistId, data.bookedDate, data.bookedTime).catch(err => console.error('[submit] removeBookedWeeklySlot failed:', err.message)));
   }
-  // Must await before responding — Vercel can freeze/terminate this function's
+  // Must await before responding - Vercel can freeze/terminate this function's
   // execution as soon as a response is sent, silently killing any calendar/email
   // work still in flight if it were left as fire-and-forget.
   await Promise.all(afterTasks).catch(err => console.error('[submit] afterTasks aggregate failure:', err.message));
@@ -188,7 +188,7 @@ async function removeBookedWeeklySlot(db, therapistId, bookedDate, bookedTime) {
   const [year, month, day] = bookedDate.split('-').map(Number);
   const dow = new Date(year, month - 1, day).getDay(); // 0 = Sunday
 
-  // Only remove fixed-type slots — range entries regenerate from the schedule automatically
+  // Only remove fixed-type slots - range entries regenerate from the schedule automatically
   const updated = t.weekly_slots.filter(s => !(!s.type || s.type === 'fixed') || !(s.day === dow && s.time === bookedTime));
   if (updated.length === t.weekly_slots.length) return; // slot not found, nothing to do
 
@@ -258,7 +258,7 @@ function cairoOffsetMinutes(year, month, day) {
 // ── Mailer ────────────────────────────────────────────────────
 // Note: Vercel bakes environment variables into each deployment at build
 // time. Changing GMAIL_USER/GMAIL_APP_PASSWORD/GOOGLE_SERVICE_ACCOUNT_JSON
-// in the dashboard does NOT take effect until the next deployment — a
+// in the dashboard does NOT take effect until the next deployment - a
 // redeploy (or any new push) is required for credential changes to apply.
 
 function mailer() {
@@ -282,8 +282,8 @@ async function sendNewSubmissionNotification(data, isAuto) {
   const subject = isAuto
     ? `${rebookingTag}Auto-Booked: ${data.fullName} with ${data.preferredTherapistName} on ${data.bookedDate}`
     : data.preferredTherapistName
-      ? `${rebookingTag}New Referral: ${data.fullName} — requested ${data.preferredTherapistName}`
-      : `${rebookingTag}New Referral: ${data.fullName} — awaiting review`;
+      ? `${rebookingTag}New Referral: ${data.fullName} - requested ${data.preferredTherapistName}`
+      : `${rebookingTag}New Referral: ${data.fullName} - awaiting review`;
 
   const rows = [
     ['Name',          data.fullName],
@@ -295,17 +295,17 @@ async function sendNewSubmissionNotification(data, isAuto) {
     data.timezone ? ['Timezone',   data.timezone] : null,
     isAuto                              ? ['Therapist',        data.preferredTherapistName] : null,
     isAuto                              ? ['Slot',             `${data.bookedDate} at ${data.bookedTime}`] : null,
-    !isAuto && data.preferredTherapistName ? ['Requested therapist', data.preferredTherapistName + ' (no open slots — needs scheduling)'] : null,
+    !isAuto && data.preferredTherapistName ? ['Requested therapist', data.preferredTherapistName + ' (no open slots - needs scheduling)'] : null,
     !isAuto && data.days                ? ['Pref. days',      data.days] : null,
     ['Reason',        data.reason],
-    ['Medication',    data.medication + (data.medicationDetails ? ` — ${data.medicationDetails}` : '')],
+    ['Medication',    data.medication + (data.medicationDetails ? ` - ${data.medicationDetails}` : '')],
     ['Referral source', data.referralSource],
   ].filter(Boolean);
 
   const tableRows = rows.map(([k, v]) => `
     <tr>
       <td style="padding:8px 12px;font-size:12px;color:#8C7E6E;text-transform:uppercase;letter-spacing:.1em;width:35%;border-bottom:1px solid #eee;white-space:nowrap;">${k}</td>
-      <td style="padding:8px 12px;font-size:14px;color:#3D3530;border-bottom:1px solid #eee;">${v || '—'}</td>
+      <td style="padding:8px 12px;font-size:14px;color:#3D3530;border-bottom:1px solid #eee;">${v || '-'}</td>
     </tr>`).join('');
 
   const html = `<!DOCTYPE html><html><body style="margin:0;padding:20px;background:#F5EFE4;font-family:Arial,sans-serif;">
@@ -352,7 +352,7 @@ async function sendPatientConfirmationEmail(data) {
         <p style="margin:0;font-size:13px;color:#3D3530;line-height:1.6;"><strong>Online session:</strong> You will receive a meeting invite link via email prior to your session.</p>
        </div>`
     : `<div style="background:#F0F9F0;border-left:4px solid #6B6349;border-radius:0 8px 8px 0;padding:14px 16px;margin-top:16px;">
-        <p style="margin:0 0 4px;font-size:13px;color:#3D3530;"><strong>In-person session — Gaia</strong></p>
+        <p style="margin:0 0 4px;font-size:13px;color:#3D3530;"><strong>In-person session - Gaia</strong></p>
         <p style="margin:0 0 8px;font-size:13px;color:#3D3530;">${GAIA_ADDRESS}</p>
         <a href="${GAIA_MAPS_URL}" style="color:#6B6349;font-size:13px;text-decoration:none;font-weight:600;">View on Google Maps →</a>
        </div>`;
@@ -467,7 +467,7 @@ async function sendTherapistNotificationEmail(data, therapistEmail) {
     ['What brings them in', data.reason],
     ['Goals',              data.goals],
     ['Had therapy before', data.prevTherapy],
-    ['On psychiatric meds', data.medication + (data.medicationDetails ? ` — ${data.medicationDetails}` : '')],
+    ['On psychiatric meds', data.medication + (data.medicationDetails ? ` - ${data.medicationDetails}` : '')],
     data.diagnoses ? ['Diagnoses',      data.diagnoses] : null,
     ['Language pref.',     data.language],
     data.extra     ? ['Notes',          data.extra]     : null,
@@ -523,7 +523,7 @@ async function sendTherapistNotificationEmail(data, therapistEmail) {
   await m.t.sendMail({
     from:    `"Gaia" <${m.user}>`,
     to:      therapistEmail,
-    subject: `New Appointment: ${data.fullName} — ${displayDate} at ${displayTime}`,
+    subject: `New Appointment: ${data.fullName} - ${displayDate} at ${displayTime}`,
     html,
   });
 }
@@ -588,7 +588,7 @@ async function sendManualAcknowledgementEmail(data) {
   await m.t.sendMail({
     from:    `"Gaia" <${m.user}>`,
     to:      data.email,
-    subject: 'We received your request — Gaia',
+    subject: 'We received your request - Gaia',
     html,
   });
 }
