@@ -58,7 +58,7 @@
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#team">Our Team</a>
-    <a href="#contact" class="nav-cta">Book a Session</a>
+    <a href="book.html" class="nav-cta">Book a Session</a>
   </div>
   <div class="hamburger" id="hamburger">
     <span></span><span></span><span></span>
@@ -70,7 +70,7 @@
   <a href="#about">About</a>
   <a href="#services">Services</a>
   <a href="#team">Our Team</a>
-  <a href="#contact">Book a Session</a>
+  <a href="book.html">Book a Session</a>
 </div>
 
 <!-- HERO -->
@@ -92,7 +92,7 @@
       evidence-based practice, delivered with warmth.
     </p>
     <div class="reveal reveal-delay-3" style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;">
-      <a href="#contact" class="btn-primary">
+      <a href="book.html" class="btn-primary">
         Book a Consultation
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
@@ -175,7 +175,7 @@
       <div class="section-label reveal">What We Offer</div>
       <h2 class="section-title reveal reveal-delay-1">Tailored care for<br /><em>every chapter of life.</em></h2>
     </div>
-    <a href="#contact" class="btn-ghost reveal" style="margin-left:0;">Book a Session</a>
+    <a href="book.html" class="btn-ghost reveal" style="margin-left:0;">Book a Session</a>
   </div>
 
   <div class="services-grid">
@@ -473,6 +473,94 @@
 
   </div>
 </section>
+
+<!-- FEEDBACK -->
+<section id="feedback" class="section" style="background:var(--cream);">
+  <div class="section-label reveal">Share Your Experience</div>
+  <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:2.6rem;">Tell us how we're <em>doing.</em></h2>
+
+  <form id="feedbackForm" class="reveal reveal-delay-2" style="max-width:580px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin-bottom:1.6rem;">
+      <div>
+        <input type="text" id="feedback-name" name="name" placeholder="Your Name" required
+               style="width:100%;border:none;border-bottom:1px solid rgba(61,53,48,.22);background:transparent;padding:.7rem 0;font-family:'Jost',sans-serif;font-size:.9rem;color:var(--warm);outline:none;">
+      </div>
+      <div>
+        <input type="email" id="feedback-email" name="email" placeholder="Email Address" required
+               style="width:100%;border:none;border-bottom:1px solid rgba(61,53,48,.22);background:transparent;padding:.7rem 0;font-family:'Jost',sans-serif;font-size:.9rem;color:var(--warm);outline:none;">
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.6rem;">
+      <div id="feedback-stars" style="font-size:1.5rem;letter-spacing:8px;cursor:pointer;color:var(--blush);">
+        <span data-star="1">&#9733;</span><span data-star="2">&#9733;</span><span data-star="3">&#9733;</span><span data-star="4">&#9733;</span><span data-star="5">&#9733;</span>
+      </div>
+      <input type="hidden" id="feedback-rating" name="rating" value="">
+    </div>
+
+    <div style="margin-bottom:2rem;">
+      <textarea id="feedback-message" name="message" rows="4" placeholder="Your feedback" required
+                style="width:100%;border:none;border-bottom:1px solid rgba(61,53,48,.22);background:transparent;padding:.7rem 0;font-family:'Jost',sans-serif;font-size:.9rem;color:var(--warm);outline:none;resize:vertical;"></textarea>
+    </div>
+
+    <div style="text-align:center;">
+      <button type="submit" class="btn-primary" style="border:none;cursor:pointer;">Submit Feedback</button>
+      <div id="feedback-msg" style="margin-top:1rem;font-family:'Jost',sans-serif;font-size:.85rem;"></div>
+    </div>
+  </form>
+</section>
+
+<script>
+(function () {
+  const form = document.getElementById('feedbackForm');
+  if (!form) return;
+  const stars = document.querySelectorAll('#feedback-stars span');
+  const ratingInput = document.getElementById('feedback-rating');
+  let selectedRating = 0;
+
+  function paintStars(n) {
+    stars.forEach(s => { s.style.color = Number(s.dataset.star) <= n ? '#3D3530' : 'var(--blush)'; });
+  }
+  stars.forEach(s => {
+    s.addEventListener('mouseenter', () => paintStars(Number(s.dataset.star)));
+    s.addEventListener('click', () => { selectedRating = Number(s.dataset.star); ratingInput.value = selectedRating; paintStars(selectedRating); });
+  });
+  document.getElementById('feedback-stars').addEventListener('mouseleave', () => paintStars(selectedRating));
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const msgEl = document.getElementById('feedback-msg');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    msgEl.textContent = '';
+    submitBtn.disabled = true;
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: document.getElementById('feedback-name').value,
+          email: document.getElementById('feedback-email').value,
+          rating: ratingInput.value || null,
+          message: document.getElementById('feedback-message').value,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+      msgEl.style.color = '#4a7a4a';
+      msgEl.textContent = 'Thank you! Your feedback has been received.';
+      form.reset();
+      selectedRating = 0;
+      ratingInput.value = '';
+      paintStars(0);
+    } catch (err) {
+      msgEl.style.color = '#b3453a';
+      msgEl.textContent = err.message || 'Could not submit feedback. Please try again.';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
 
 <!-- CONTACT -->
 <section id="contact" class="section" style="background:var(--warm);">

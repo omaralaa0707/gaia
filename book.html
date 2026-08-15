@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Your Journey | Gaia</title>
+<meta name="description" content="Begin your journey with Gaia. Fill out our short referral form to book a session or get matched with the right therapist.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #3D3530; --blue: #6B6349; --blue-lt: #8C7E6E;
+    --cream: #F5EFE4; --warm: #3D3530; --muted: #8C7E6E;
+    --white: #FAFAF8; --border: rgba(107,99,73,0.18);
+  }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--warm); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; }
+
+  .card { background: var(--white); border-radius: 6px; width: 100%; max-width: 700px; box-shadow: 0 20px 80px rgba(10,16,26,0.12); overflow: hidden; }
+
+  .card-header { background: var(--navy); padding: 2rem 2.5rem; }
+  .card-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: #fff; }
+  .card-header p { font-size: 0.7rem; color: var(--blue-lt); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.3rem; }
+
+  .progress-wrap { padding: 1.5rem 2.5rem 0; }
+  .progress-steps { display: flex; align-items: center; }
+  .step-dot { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: var(--muted); background: var(--white); flex-shrink: 0; transition: all 0.25s; }
+  .step-dot.active { border-color: var(--blue); background: var(--blue); color: #fff; }
+  .step-dot.done { border-color: var(--navy); background: var(--navy); color: #fff; }
+  .step-line { flex: 1; height: 2px; background: var(--border); transition: background 0.25s; }
+  .step-line.done { background: var(--navy); }
+  .step-labels { display: flex; justify-content: space-between; padding: 0 4px; margin-top: 0.4rem; }
+  .step-label { font-size: 0.58rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .card-body { padding: 2rem 2.5rem; }
+  .step { display: none; }
+  .step.active { display: block; }
+  .step-eyebrow { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); display: block; margin-bottom: 0.35rem; }
+  .step h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--warm); margin-bottom: 1.5rem; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); }
+  .form-group input, .form-group textarea, .form-group select {
+    padding: 0.75rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.88rem;
+    color: var(--warm); background: var(--cream); border: 1.5px solid var(--border);
+    border-radius: 3px; outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--blue); background: var(--white); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6349' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-color: var(--cream); }
+  .required-note { font-size: 0.65rem; color: var(--muted); margin-bottom: 1rem; }
+
+  .chip-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip { padding: 0.45rem 1rem; border: 1.5px solid var(--border); border-radius: 20px; font-size: 0.8rem; color: var(--muted); cursor: pointer; transition: all 0.15s; user-select: none; background: var(--cream); }
+  .chip:hover { border-color: var(--blue); color: var(--warm); }
+  .chip.selected { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+  /* Slot picker (preferred days for "not sure") */
+  .slot-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .slot-row select { flex: 1; min-width: 120px; border: 1.5px solid var(--border); border-radius: 6px; padding: 0.5rem 0.7rem; font-family: 'Jost', sans-serif; font-size: 0.82rem; color: var(--warm); background: var(--cream); outline: none; }
+  .slot-row select:focus { border-color: var(--blue); }
+  .slot-row .slot-at { font-size: 0.8rem; color: var(--muted); flex-shrink: 0; }
+  .slot-remove { background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; padding: 0 0.3rem; flex-shrink: 0; line-height: 1; }
+  .slot-remove:hover { color: #dc2626; }
+  .slot-add-btn { margin-top: 0.4rem; background: none; border: 1.5px dashed var(--border); border-radius: 6px; padding: 0.45rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.8rem; color: var(--blue); cursor: pointer; transition: all 0.15s; }
+  .slot-add-btn:hover { border-color: var(--blue); background: rgba(107,99,73,0.06); }
+  .slot-add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Online disclaimer */
+  .online-notice { background: rgba(107,99,73,0.1); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0; padding: 0.9rem 1.1rem; margin-bottom: 1rem; font-size: 0.82rem; color: var(--warm); line-height: 1.6; }
+  .online-notice strong { color: var(--navy); }
+
+  /* Conditional sections */
+  .conditional { display: none; margin-top: 1rem; }
+  .conditional.visible { display: block; }
+
+  /* Therapist cards */
+  .therapist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-bottom: 1rem; }
+  .therapist-card { border: 1.5px solid var(--border); border-radius: 6px; padding: 0.9rem 1rem; cursor: pointer; transition: all 0.18s; background: var(--cream); display: flex; align-items: center; gap: 0.75rem; }
+  .therapist-card:hover { border-color: var(--blue); background: rgba(107,99,73,0.06); }
+  .therapist-card.selected { border-color: var(--navy); background: rgba(61,53,48,0.06); }
+  .therapist-card.notsure { grid-column: 1 / -1; border-style: dashed; }
+  .therapist-card.unavailable { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+  .therapist-card.unavailable .tc-role::after { content: ' · Unavailable'; color: var(--muted); }
+  .therapist-card .tc-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--navy); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #fff; overflow: hidden; }
+  .therapist-card .tc-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .therapist-card .tc-info .tc-name { font-size: 0.88rem; font-weight: 600; color: var(--warm); }
+  .therapist-card .tc-info .tc-role { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+  .therapist-card .tc-info .tc-price { font-size: 0.72rem; color: var(--blue, #2a6df4); font-weight: 600; margin-top: 0.15rem; }
+  .therapist-card.selected .tc-name { color: var(--navy); }
+
+  /* Available slot chips */
+  .slots-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; display: block; }
+  .slot-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .slot-chip { padding: 0.5rem 0.9rem; border: 1.5px solid var(--border); border-radius: 6px; font-size: 0.78rem; color: var(--muted); cursor: pointer; transition: all 0.15s; background: var(--cream); white-space: nowrap; }
+  .slot-chip:hover { border-color: var(--blue); color: var(--warm); }
+  .slot-chip.selected { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .slots-empty { font-size: 0.82rem; color: var(--muted); font-style: italic; padding: 0.5rem 0; }
+
+  /* Loading skeleton */
+  .therapist-loading { display: flex; gap: 0.7rem; flex-direction: column; }
+  .skeleton { background: linear-gradient(90deg, #e8e2d8 25%, #f0eae0 50%, #e8e2d8 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 6px; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  /* Navigation */
+  .nav-row { display: flex; gap: 1rem; margin-top: 2rem; }
+  .btn-back { flex: 1; padding: 0.85rem; border: 1.5px solid var(--border); border-radius: 3px; background: none; font-family: 'Jost', sans-serif; font-size: 0.85rem; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+  .btn-back:hover { border-color: var(--blue); color: var(--warm); }
+  .btn-next { flex: 2; padding: 0.85rem; background: var(--navy); border: none; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 600; color: #fff; cursor: pointer; letter-spacing: 0.05em; transition: opacity 0.2s; }
+  .btn-next:hover { opacity: 0.88; }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Review step */
+  .review-section { margin-bottom: 1.2rem; }
+  .review-section h4 { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; margin-bottom: 0.7rem; }
+  .review-row { display: flex; gap: 1rem; margin-bottom: 0.5rem; font-size: 0.83rem; }
+  .review-label { color: var(--muted); min-width: 160px; flex-shrink: 0; }
+  .review-value { color: var(--warm); font-weight: 500; }
+
+  /* Confirmation screen */
+  .confirmation { display: none; text-align: center; padding: 3rem 2.5rem; }
+  .confirmation.active { display: block; }
+  .confirmation-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .confirmation h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--warm); margin-bottom: 0.8rem; }
+  .confirmation p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; max-width: 420px; margin: 0 auto 2rem; }
+  .confirmation .btn-home { display: inline-block; padding: 0.85rem 2rem; background: var(--navy); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; border-radius: 3px; text-decoration: none; transition: opacity 0.2s; }
+  .confirmation .btn-home:hover { opacity: 0.88; }
+
+  /* Payment step */
+  .payment-box { background: rgba(107,99,73,0.1); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+  .payment-box p { font-size: 0.82rem; color: var(--warm); line-height: 1.6; margin: 0 0 0.7rem; }
+  .payment-link-btn { display: inline-block; background: var(--navy); color: #fff; padding: 0.65rem 1.3rem; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 600; text-decoration: none; letter-spacing: 0.03em; transition: opacity 0.2s; }
+  .payment-link-btn:hover { opacity: 0.88; }
+  .payment-proof-input input[type="file"] { display: block; margin-top: 0.5rem; font-size: 0.8rem; color: var(--muted); }
+  .payment-proof-preview img { max-width: 180px; max-height: 180px; border-radius: 6px; margin-top: 0.7rem; border: 1px solid var(--border); display: block; object-fit: cover; }
+
+  /* Error / general alert */
+  .field-error { font-size: 0.7rem; color: #c0392b; margin-top: 0.2rem; display: none; }
+  .field-error.visible { display: block; }
+  .alert-error { background: #fef2f2; border: 1px solid #fca5a5; border-radius: 4px; padding: 0.75rem 1rem; font-size: 0.82rem; color: #b91c1c; margin-top: 1rem; display: none; }
+  .alert-error.visible { display: block; }
+
+  @media (max-width: 600px) {
+    body { padding: 1rem; align-items: flex-start; }
+    .card-header, .card-body, .progress-wrap { padding: 1.5rem 1.25rem; }
+    .card-header { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    .progress-wrap { padding-top: 1.25rem; padding-bottom: 0; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .therapist-grid { grid-template-columns: 1fr; }
+    .therapist-card.notsure { grid-column: 1; }
+    .review-row { flex-direction: column; gap: 0.15rem; }
+    .review-label { min-width: 0; }
+    .nav-row { gap: 0.6rem; }
+
+    /* Prevent iOS Safari's auto-zoom-on-focus (triggers below 16px inputs) */
+    .form-group input, .form-group textarea, .form-group select,
+    .slot-row select { font-size: 16px; padding: 0.85rem 1rem; }
+
+    /* Real touch targets (44px min) for tappable controls */
+    .chip { padding: 0.65rem 1.1rem; font-size: 0.85rem; min-height: 40px; display: inline-flex; align-items: center; }
+    .slot-chip { padding: 0.7rem 1rem; font-size: 0.85rem; min-height: 40px; display: inline-flex; align-items: center; }
+    .therapist-card { padding: 1rem 1.1rem; min-height: 44px; }
+    .btn-back, .btn-next { padding: 1rem; font-size: 0.9rem; min-height: 48px; }
+    .slot-remove { font-size: 1.35rem; padding: 0.4rem 0.6rem; }
+    .slot-add-btn { padding: 0.65rem 1.1rem; min-height: 40px; }
+
+    /* Slightly larger body copy for legibility on real phone screens */
+    .therapist-card .tc-info .tc-name { font-size: 0.92rem; }
+    .therapist-card .tc-info .tc-role, .therapist-card .tc-info .tc-price { font-size: 0.78rem; }
+    .review-row { font-size: 0.88rem; }
+    .online-notice, .payment-box p { font-size: 0.86rem; }
+  }
+
+  @media (max-width: 400px) {
+    .step-labels { display: none; }
+  }
+
+  @media (max-width: 340px) {
+    .card-header, .card-body, .progress-wrap { padding-left: 1rem; padding-right: 1rem; }
+    .nav-row { flex-direction: column; }
+    .btn-back, .btn-next { flex: none; width: 100%; }
+  }
+</style>
+</head>
+<body data-content-page="book">
+<script src="assets/js/content-loader.js"></script>
+
+<div class="card">
+  <div class="card-header">
+    <h2 data-slot="book.hero.heading">Start Your Journey</h2>
+    <p data-slot="book.hero.subtitle">New Client Referral Form</p>
+  </div>
+
+  <div class="progress-wrap" id="progress-wrap" style="display:none;">
+    <div class="progress-steps">
+      <div class="step-dot active" id="dot-1">1</div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-dot" id="dot-2">2</div>
+      <div class="step-line" id="line-2"></div>
+      <div class="step-dot" id="dot-3">3</div>
+      <div class="step-line" id="line-3"></div>
+      <div class="step-dot" id="dot-4">4</div>
+      <div class="step-line" id="line-4"></div>
+      <div class="step-dot" id="dot-5">5</div>
+    </div>
+    <div class="step-labels">
+      <span class="step-label" data-slot="book.progress.step1label">About You</span>
+      <span class="step-label" data-slot="book.progress.step2label">Your Needs</span>
+      <span class="step-label" data-slot="book.progress.step3label">Session</span>
+      <span class="step-label" data-slot="book.progress.step4label">Therapist</span>
+      <span class="step-label" data-slot="book.progress.step5label">Review</span>
+    </div>
+  </div>
+
+  <div class="progress-wrap" id="ex-progress-wrap" style="display:none;">
+    <div class="progress-steps">
+      <div class="step-dot active" id="ex-dot-1">1</div>
+      <div class="step-line" id="ex-line-1"></div>
+      <div class="step-dot" id="ex-dot-2">2</div>
+      <div class="step-line" id="ex-line-2"></div>
+      <div class="step-dot" id="ex-dot-3">3</div>
+      <div class="step-line" id="ex-line-3"></div>
+      <div class="step-dot" id="ex-dot-4">4</div>
+    </div>
+    <div class="step-labels">
+      <span class="step-label">About You</span>
+      <span class="step-label">Session</span>
+      <span class="step-label">Therapist</span>
+      <span class="step-label">Review</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <!-- ── Mode select: New vs Existing client ────────────── -->
+    <div class="step active" id="mode-select">
+      <h3>Welcome to Gaia</h3>
+      <p class="required-note" style="margin-bottom:1.5rem;">Are you a new client, or already working with us?</p>
+      <div style="display:flex; flex-direction:column; gap:0.8rem;">
+        <button class="btn-next" onclick="chooseMode('new')">I'm a New Client</button>
+        <button class="btn-back" onclick="chooseMode('existing')">I'm an Existing Client — Rebook a Session</button>
+      </div>
+    </div>
+
+    <!-- ── Step 1: About You ──────────────────────────────── -->
+    <div class="step" id="step-1">
+      <span class="step-eyebrow" data-slot="book.step1.eyebrow">Step 1 of 5</span>
+      <h3 data-slot="book.step1.heading">About You</h3>
+      <p class="required-note" data-slot="book.step1.requirednote">Fields marked * are required.</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fullName">Full Name *</label>
+          <input type="text" id="fullName" placeholder="e.g. Sara Ahmed" autocomplete="name">
+          <span class="field-error" id="err-fullName">Please enter your full name.</span>
+        </div>
+        <div class="form-group">
+          <label for="age">Age *</label>
+          <input type="number" id="age" min="5" max="120" placeholder="e.g. 30">
+          <span class="field-error" id="err-age">Please enter a valid age.</span>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" placeholder="e.g. 01012345678" autocomplete="tel">
+          <span class="field-error" id="err-phone">Please enter your phone number.</span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" placeholder="e.g. sara@email.com" autocomplete="email">
+          <span class="field-error" id="err-email">Please enter a valid email address.</span>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-next" onclick="goNext(1)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ── Existing client: Step 1 (About You, trimmed) ──── -->
+    <div class="step" id="ex-step-1">
+      <span class="step-eyebrow">Step 1 of 4</span>
+      <h3>About You</h3>
+      <p class="required-note">Fields marked * are required.</p>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label for="exFullName">Full Name *</label>
+          <input type="text" id="exFullName" placeholder="e.g. Sara Ahmed" autocomplete="name">
+          <span class="field-error" id="err-exFullName">Please enter your full name.</span>
+        </div>
+        <div class="form-group">
+          <label for="exPhone">Phone Number *</label>
+          <input type="tel" id="exPhone" placeholder="e.g. 01012345678" autocomplete="tel">
+          <span class="field-error" id="err-exPhone">Please enter your phone number.</span>
+        </div>
+        <div class="form-group">
+          <label for="exEmail">Email Address *</label>
+          <input type="email" id="exEmail" placeholder="e.g. sara@email.com" autocomplete="email">
+          <span class="field-error" id="err-exEmail">Please enter a valid email address.</span>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-next" onclick="exGoNext(1)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ── Existing client: Step 2 (Session, trimmed) ────── -->
+    <div class="step" id="ex-step-2">
+      <span class="step-eyebrow">Step 2 of 4</span>
+      <h3>Session</h3>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Session type *</label>
+          <div class="chip-group" id="chips-sessionTypeEx">
+            <div class="chip" data-value="In-person" onclick="selectChip('sessionTypeEx',this,'single')">In-person</div>
+            <div class="chip" data-value="Online" onclick="selectChip('sessionTypeEx',this,'single')">Online</div>
+          </div>
+          <span class="field-error" id="err-sessionTypeEx">Please select a session type.</span>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="exGoBack(2)">← Back</button>
+        <button class="btn-next" onclick="exGoNext(2)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ── Step 2: Your Needs ─────────────────────────────── -->
+    <div class="step" id="step-2">
+      <span class="step-eyebrow" data-slot="book.step2.eyebrow">Step 2 of 5</span>
+      <h3 data-slot="book.step2.heading">Your Needs</h3>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label for="reason">What brings you in? *</label>
+          <textarea id="reason" placeholder="Describe what you're experiencing in your own words..."></textarea>
+          <span class="field-error" id="err-reason">Please tell us what brings you in.</span>
+        </div>
+
+        <div class="form-group full">
+          <label>Have you had therapy before? *</label>
+          <div class="chip-group" id="chips-prevTherapy">
+            <div class="chip" data-value="Yes" onclick="selectChip('prevTherapy',this,'single')">Yes</div>
+            <div class="chip" data-value="No" onclick="selectChip('prevTherapy',this,'single')">No</div>
+          </div>
+          <span class="field-error" id="err-prevTherapy">Please select an option.</span>
+        </div>
+
+        <div class="form-group full">
+          <label>Are you currently on psychiatric medication? *</label>
+          <div class="chip-group" id="chips-medication">
+            <div class="chip" data-value="Yes" onclick="selectChip('medication',this,'single'); toggleMedDetail(this)">Yes</div>
+            <div class="chip" data-value="No" onclick="selectChip('medication',this,'single'); toggleMedDetail(this)">No</div>
+          </div>
+          <span class="field-error" id="err-medication">Please select an option.</span>
+        </div>
+
+        <div class="conditional form-group full" id="cond-medDetail">
+          <label for="medicationDetails">Please specify your current medications</label>
+          <input type="text" id="medicationDetails" placeholder="e.g. Fluoxetine 20mg, Clonazepam...">
+        </div>
+
+        <div class="form-group full">
+          <label for="diagnoses">Have you ever been given a diagnosis? (optional)</label>
+          <input type="text" id="diagnoses" placeholder="e.g. Anxiety, Depression, or leave blank if unsure">
+        </div>
+
+        <div class="form-group full">
+          <label for="goals">What are your goals for therapy? *</label>
+          <textarea id="goals" placeholder="What would you like to achieve or work on?"></textarea>
+          <span class="field-error" id="err-goals">Please describe your goals.</span>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(2)">← Back</button>
+        <button class="btn-next" onclick="goNext(2)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ── Step 3: Session Preferences ───────────────────── -->
+    <div class="step" id="step-3">
+      <span class="step-eyebrow" data-slot="book.step3.eyebrow">Step 3 of 5</span>
+      <h3 data-slot="book.step3.heading">Session Preferences</h3>
+      <div class="form-grid">
+
+        <div class="form-group full">
+          <label>Session type *</label>
+          <div class="chip-group" id="chips-sessionType">
+            <div class="chip" data-value="In-person" onclick="selectChip('sessionType',this,'single'); toggleOnlineSection(this)">In-person</div>
+            <div class="chip" data-value="Online" onclick="selectChip('sessionType',this,'single'); toggleOnlineSection(this)">Online</div>
+          </div>
+          <span class="field-error" id="err-sessionType">Please select a session type.</span>
+        </div>
+
+        <div class="conditional form-group full" id="cond-online">
+          <div class="online-notice">
+            <strong>Note:</strong> Online sessions are priced higher than in-person sessions. Our team will confirm the exact fee when they contact you.
+          </div>
+          <div class="form-grid" style="margin-top:0.75rem;">
+            <div class="form-group">
+              <label for="country">Country *</label>
+              <input type="text" id="country" placeholder="e.g. United Arab Emirates" autocomplete="country-name">
+              <span class="field-error" id="err-country">Please enter your country.</span>
+            </div>
+            <div class="form-group">
+              <label for="timezone">Time Zone *</label>
+              <select id="timezone">
+                <option value="">Select time zone...</option>
+                <option value="Africa/Cairo (UTC+2) — Egypt">Egypt (UTC+2)</option>
+                <option value="Asia/Riyadh (UTC+3) — Saudi Arabia">Saudi Arabia (UTC+3)</option>
+                <option value="Asia/Dubai (UTC+4) — UAE">UAE (UTC+4)</option>
+                <option value="Asia/Kuwait (UTC+3) — Kuwait">Kuwait (UTC+3)</option>
+                <option value="Asia/Qatar (UTC+3) — Qatar">Qatar (UTC+3)</option>
+                <option value="Asia/Beirut (UTC+2/3) — Lebanon">Lebanon (UTC+2/3)</option>
+                <option value="Asia/Amman (UTC+2/3) — Jordan">Jordan (UTC+2/3)</option>
+                <option value="Europe/London (UTC+0/1) — UK">UK (UTC+0/1)</option>
+                <option value="Europe/Paris (UTC+1/2) — France / Central Europe">Central Europe (UTC+1/2)</option>
+                <option value="America/New_York (UTC-5/-4) — US Eastern">US Eastern (UTC-5/-4)</option>
+                <option value="America/Chicago (UTC-6/-5) — US Central">US Central (UTC-6/-5)</option>
+                <option value="America/Los_Angeles (UTC-8/-7) — US Pacific">US Pacific (UTC-8/-7)</option>
+                <option value="Australia/Sydney (UTC+10/11) — Australia Eastern">Australia Eastern</option>
+                <option value="Other">Other</option>
+              </select>
+              <span class="field-error" id="err-timezone">Please select your time zone.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label>Preferred therapist gender</label>
+          <div class="chip-group" id="chips-gender">
+            <div class="chip" data-value="No preference" onclick="selectChip('gender',this,'single')">No preference</div>
+            <div class="chip" data-value="Female" onclick="selectChip('gender',this,'single')">Female</div>
+            <div class="chip" data-value="Male" onclick="selectChip('gender',this,'single')">Male</div>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label>Preferred language *</label>
+          <div class="chip-group" id="chips-language">
+            <div class="chip" data-value="Arabic" onclick="selectChip('language',this,'single')">Arabic</div>
+            <div class="chip" data-value="English" onclick="selectChip('language',this,'single')">English</div>
+            <div class="chip" data-value="Either" onclick="selectChip('language',this,'single')">Either</div>
+          </div>
+          <span class="field-error" id="err-language">Please select a language preference.</span>
+        </div>
+
+      </div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(3)">← Back</button>
+        <button class="btn-next" onclick="goNext(3)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ── Step 4: Choose Your Therapist ─────────────────── -->
+    <div class="step" id="step-4">
+      <span class="step-eyebrow" data-slot="book.step4.eyebrow">Step 4 of 5</span>
+      <h3 data-slot="book.step4.heading">Choose Your Therapist</h3>
+      <p class="required-note" style="margin-bottom:1.2rem;" data-slot="book.step4.instructions">
+        Pick a specific therapist to book a session instantly, or let our team match you.
+      </p>
+
+      <!-- Therapist cards -->
+      <div id="therapist-list">
+        <div class="therapist-loading">
+          <div class="skeleton" style="height:60px;"></div>
+          <div class="skeleton" style="height:60px;"></div>
+          <div class="skeleton" style="height:60px;"></div>
+        </div>
+      </div>
+      <span class="field-error" id="err-therapist" style="margin-top:0.5rem;">Please make a selection.</span>
+
+      <!-- Slots for a specific therapist -->
+      <div class="conditional" id="cond-slots" style="margin-top:1.2rem;">
+        <span class="slots-label" data-slot="book.step4.slotslabel">Available appointments in the next 2 weeks</span>
+        <div class="slot-chips" id="slot-chips"></div>
+        <p class="slots-empty" id="slots-empty" style="display:none;" data-slot="book.step4.slotsempty">
+          No open slots right now. Our team will reach out to schedule your session.
+        </p>
+        <span class="field-error" id="err-slot" style="margin-top:0.5rem;">Please select an appointment slot.</span>
+      </div>
+
+      <!-- Day/time preferences (only for "not sure") -->
+      <div class="conditional" id="cond-pref" style="margin-top:1.2rem;">
+<div class="form-group full" style="margin-bottom:1rem;">
+          <label>Preferred days (select all that apply)</label>
+          <div class="chip-group" id="chips-days">
+            <div class="chip" data-value="Sunday" onclick="selectChip('days',this,'multi')">Sunday</div>
+            <div class="chip" data-value="Monday" onclick="selectChip('days',this,'multi')">Monday</div>
+            <div class="chip" data-value="Tuesday" onclick="selectChip('days',this,'multi')">Tuesday</div>
+            <div class="chip" data-value="Wednesday" onclick="selectChip('days',this,'multi')">Wednesday</div>
+            <div class="chip" data-value="Thursday" onclick="selectChip('days',this,'multi')">Thursday</div>
+            <div class="chip" data-value="Saturday" onclick="selectChip('days',this,'multi')">Saturday</div>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>Preferred time of day</label>
+          <div class="chip-group" id="chips-timeOfDay">
+            <div class="chip" data-value="Morning (before 12pm)" onclick="selectChip('timeOfDay',this,'single')">Morning</div>
+            <div class="chip" data-value="Afternoon (12–4pm)" onclick="selectChip('timeOfDay',this,'single')">Afternoon</div>
+            <div class="chip" data-value="Evening (after 4pm)" onclick="selectChip('timeOfDay',this,'single')">Evening</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn-back" onclick="step4Back()">← Back</button>
+        <button class="btn-next" onclick="step4Next()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ── Existing client: Review + Submit ──────────────── -->
+    <div class="step" id="ex-step-review">
+      <span class="step-eyebrow">Step 4 of 4</span>
+      <h3>Review &amp; Confirm</h3>
+
+      <div id="ex-review-box"></div>
+
+      <div class="review-section">
+        <h4>Payment</h4>
+        <div class="payment-box" id="ex-payment-box-auto">
+          <p>Please send your session payment via InstaPay, then attach a screenshot of the payment below.</p>
+          <a href="https://ipn.eg/S/PLACEHOLDER/instapay/PLACEHOLDER" target="_blank" rel="noopener" class="payment-link-btn">Click to Pay via InstaPay →</a>
+          <p style="margin-top:0.7rem;margin-bottom:0;">Send to <strong>PLACEHOLDER@instapay</strong> · Powered by InstaPay</p>
+        </div>
+        <div class="form-group full payment-proof-input" id="ex-payment-proof-wrap">
+          <label for="exPaymentProof">Attach payment screenshot *</label>
+          <input type="file" id="exPaymentProof" accept="image/*" onchange="handlePaymentProofChange(event)">
+          <span class="field-error" id="err-exPaymentProof">Please attach a screenshot of your payment before submitting.</span>
+          <div class="payment-proof-preview" id="exPaymentProofPreview"></div>
+        </div>
+        <div class="payment-box" id="ex-payment-box-manual" style="display:none;">
+          <p style="margin:0;">Our team will follow up with payment details once your session is scheduled.</p>
+        </div>
+      </div>
+
+      <div id="ex-submit-error" class="alert-error">Something went wrong. Please try again or contact us directly.</div>
+
+      <div class="nav-row">
+        <button class="btn-back" onclick="exGoBack(4)">← Back</button>
+        <button class="btn-next" id="ex-btn-submit" onclick="submitExistingForm()">Submit →</button>
+      </div>
+    </div>
+
+    <!-- ── Step 5: Final Details + Review ────────────────── -->
+    <div class="step" id="step-5">
+      <span class="step-eyebrow" data-slot="book.step5.eyebrow">Step 5 of 5</span>
+      <h3 data-slot="book.step5.heading">Final Details</h3>
+      <div class="form-grid" style="margin-bottom:1.5rem;">
+        <div class="form-group full">
+          <label>How did you hear about us? *</label>
+          <div class="chip-group" id="chips-referralSource">
+            <div class="chip" data-value="Instagram" onclick="selectChip('referralSource',this,'single')">Instagram</div>
+            <div class="chip" data-value="Facebook" onclick="selectChip('referralSource',this,'single')">Facebook</div>
+            <div class="chip" data-value="Friend or family" onclick="selectChip('referralSource',this,'single')">Friend / Family</div>
+            <div class="chip" data-value="Google search" onclick="selectChip('referralSource',this,'single')">Google</div>
+            <div class="chip" data-value="Therapist referral" onclick="selectChip('referralSource',this,'single')">Therapist referral</div>
+            <div class="chip" data-value="Other" onclick="selectChip('referralSource',this,'single')">Other</div>
+          </div>
+          <span class="field-error" id="err-referralSource">Please let us know how you found us.</span>
+        </div>
+        <div class="form-group full">
+          <label for="extra">Anything else you'd like us to know? (optional)</label>
+          <textarea id="extra" placeholder="Any additional context or questions..."></textarea>
+        </div>
+      </div>
+
+      <!-- Review summary -->
+      <div id="review-box"></div>
+
+      <div class="review-section">
+        <h4>Payment</h4>
+        <div class="payment-box" id="payment-box-auto">
+          <p>Please send your session payment via InstaPay, then attach a screenshot of the payment below.</p>
+          <a href="https://ipn.eg/S/PLACEHOLDER/instapay/PLACEHOLDER" target="_blank" rel="noopener" class="payment-link-btn">Click to Pay via InstaPay →</a>
+          <p style="margin-top:0.7rem;margin-bottom:0;">Send to <strong>PLACEHOLDER@instapay</strong> · Powered by InstaPay</p>
+        </div>
+        <div class="form-group full payment-proof-input" id="payment-proof-wrap">
+          <label for="paymentProof">Attach payment screenshot *</label>
+          <input type="file" id="paymentProof" accept="image/*" onchange="handlePaymentProofChange(event)">
+          <span class="field-error" id="err-paymentProof">Please attach a screenshot of your payment before submitting.</span>
+          <div class="payment-proof-preview" id="paymentProofPreview"></div>
+        </div>
+        <div class="payment-box" id="payment-box-manual" style="display:none;">
+          <p style="margin:0;">Our team will follow up with payment details once your session is scheduled.</p>
+        </div>
+      </div>
+
+      <div id="submit-error" class="alert-error">Something went wrong. Please try again or contact us directly.</div>
+
+      <div class="nav-row">
+        <button class="btn-back" onclick="goBack(5)">← Back</button>
+        <button class="btn-next" id="btn-submit" onclick="submitForm()">Submit →</button>
+      </div>
+    </div>
+
+    <!-- ── Confirmation ───────────────────────────────────── -->
+    <div class="confirmation" id="confirmation">
+      <div class="confirmation-icon" id="conf-icon">✓</div>
+      <h3 id="conf-title">You're all set!</h3>
+      <p id="conf-body">Thank you for reaching out. Our team will review your information and be in touch shortly to confirm your appointment.</p>
+      <a href="/" class="btn-home">Back to Home</a>
+    </div>
+
+  </div><!-- /card-body -->
+</div><!-- /card -->
+
+<script>
+const SUBMIT_URL     = '/api/submit';
+const THERAPISTS_URL = '/api/therapists';
+const TOTAL_STEPS    = 5;
+
+// ── State ──────────────────────────────────────────────────────
+const chipSelections = {};   // fieldName → value or array
+let therapistData    = [];   // full API response
+let selectedTherapistId   = null;
+let selectedTherapistName = null;
+let selectedSlotDate      = null;
+let selectedSlotTime      = null;
+let selectedSlotLabel     = null;
+let bookingType           = 'manual'; // 'auto' | 'manual'
+let mode                  = null;     // 'new' | 'existing'
+
+// ── Mode select ────────────────────────────────────────────────
+function chooseMode(m) {
+  mode = m;
+  document.getElementById('mode-select').classList.remove('active');
+  if (m === 'new') {
+    document.getElementById('progress-wrap').style.display = '';
+    showStep(1);
+  } else {
+    document.getElementById('ex-progress-wrap').style.display = '';
+    showExStep(1);
+  }
+}
+
+// Deep-link support: ?mode=existing (e.g. from a "Reschedule Online" email link)
+// jumps straight past the mode-select screen into the existing-client flow.
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') === 'existing') chooseMode('existing');
+})();
+
+// ── Progress bar ───────────────────────────────────────────────
+function updateProgress(step) {
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const dot  = document.getElementById('dot-' + i);
+    if (i < step)       { dot.className = 'step-dot done'; dot.textContent = '✓'; }
+    else if (i === step){ dot.className = 'step-dot active'; dot.textContent = i; }
+    else                { dot.className = 'step-dot'; dot.textContent = i; }
+  }
+  for (let i = 1; i < TOTAL_STEPS; i++) {
+    document.getElementById('line-' + i).className = 'step-line' + (i < step ? ' done' : '');
+  }
+}
+
+// ── Chip selection ─────────────────────────────────────────────
+function selectChip(field, el, mode) {
+  const group = document.getElementById('chips-' + field);
+  if (!group) return;
+  if (mode === 'single') {
+    group.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    chipSelections[field] = el.dataset.value;
+  } else {
+    el.classList.toggle('selected');
+    const sel = [...group.querySelectorAll('.chip.selected')].map(c => c.dataset.value);
+    chipSelections[field] = sel.join(', ');
+  }
+  const errEl = document.getElementById('err-' + field);
+  if (errEl) errEl.classList.remove('visible');
+}
+
+// ── Conditional: medication detail ────────────────────────────
+function toggleMedDetail(el) {
+  const yes = el.dataset.value === 'Yes';
+  document.getElementById('cond-medDetail').classList.toggle('visible', yes);
+  if (!yes) document.getElementById('medicationDetails').value = '';
+}
+
+// ── Conditional: online section ────────────────────────────────
+function toggleOnlineSection(el) {
+  const online = el.dataset.value === 'Online';
+  document.getElementById('cond-online').classList.toggle('visible', online);
+  if (!online) {
+    document.getElementById('country').value  = '';
+    document.getElementById('timezone').value = '';
+  }
+}
+
+// ── Step navigation ────────────────────────────────────────────
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const s = document.getElementById('step-' + n);
+  if (s) s.classList.add('active');
+  updateProgress(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack(currentStep) {
+  showStep(currentStep - 1);
+}
+
+function goNext(currentStep) {
+  if (!validateStep(currentStep)) return;
+  if (currentStep === TOTAL_STEPS - 1) buildReview();
+  showStep(currentStep + 1);
+  if (currentStep + 1 === 4) loadTherapists();
+}
+
+// ── Existing-client step navigation ─────────────────────────────
+// exStep 1 = ex-step-1 (About You), 2 = ex-step-2 (Session),
+// 3 = step-4 (shared therapist/slot picker), 4 = ex-step-review
+const EX_STEP_IDS = { 1: 'ex-step-1', 2: 'ex-step-2', 3: 'step-4', 4: 'ex-step-review' };
+
+function showExStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const s = document.getElementById(EX_STEP_IDS[n]);
+  if (s) s.classList.add('active');
+  updateExProgress(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (n === 3) loadTherapists();
+}
+
+function updateExProgress(step) {
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('ex-dot-' + i);
+    if (i < step)        { dot.className = 'step-dot done'; dot.textContent = '✓'; }
+    else if (i === step) { dot.className = 'step-dot active'; dot.textContent = i; }
+    else                 { dot.className = 'step-dot'; dot.textContent = i; }
+  }
+  for (let i = 1; i < 4; i++) {
+    document.getElementById('ex-line-' + i).className = 'step-line' + (i < step ? ' done' : '');
+  }
+}
+
+function exGoBack(currentExStep) {
+  showExStep(currentExStep - 1);
+}
+
+function exGoNext(currentExStep) {
+  if (!validateExStep(currentExStep)) return;
+  if (currentExStep === 3) buildExistingReview();
+  showExStep(currentExStep + 1);
+}
+
+// step-4's nav buttons are shared between both flows — route based on mode
+function step4Back() {
+  if (mode === 'existing') exGoBack(3);
+  else goBack(4);
+}
+function step4Next() {
+  if (mode === 'existing') exGoNext(3);
+  else goNext(4);
+}
+
+// ── Validation ─────────────────────────────────────────────────
+function required(id) {
+  const el  = document.getElementById(id);
+  const err = document.getElementById('err-' + id);
+  const val = el ? el.value.trim() : '';
+  const ok  = val.length > 0;
+  if (err) err.classList.toggle('visible', !ok);
+  return ok;
+}
+function requiredChip(field) {
+  const ok = !!(chipSelections[field] && chipSelections[field].length);
+  const err = document.getElementById('err-' + field);
+  if (err) err.classList.toggle('visible', !ok);
+  return ok;
+}
+function requiredEmail(id) {
+  const el  = document.getElementById(id);
+  const err = document.getElementById('err-' + id);
+  const ok  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((el ? el.value : '').trim());
+  if (err) err.classList.toggle('visible', !ok);
+  return ok;
+}
+
+function validateStep(step) {
+  let ok = true;
+  if (step === 1) {
+    if (!required('fullName'))   ok = false;
+    if (!required('age'))        ok = false;
+    if (!required('phone'))      ok = false;
+    if (!requiredEmail('email')) ok = false;
+  }
+  if (step === 2) {
+    if (!required('reason'))         ok = false;
+    if (!requiredChip('prevTherapy'))ok = false;
+    if (!requiredChip('medication')) ok = false;
+    if (!required('goals'))          ok = false;
+  }
+  if (step === 3) {
+    if (!requiredChip('sessionType')) ok = false;
+    if (chipSelections['sessionType'] === 'Online') {
+      if (!required('country'))  ok = false;
+      if (!required('timezone')) ok = false;
+    }
+    if (!requiredChip('language')) ok = false;
+  }
+  if (step === 4) {
+    if (!selectedTherapistId && chipSelections['therapistChoice'] !== 'notsure') {
+      document.getElementById('err-therapist').classList.add('visible');
+      ok = false;
+    }
+    if (bookingType === 'auto' && !selectedSlotDate) {
+      document.getElementById('err-slot').classList.add('visible');
+      ok = false;
+    }
+  }
+  return ok;
+}
+
+function validateExStep(step) {
+  let ok = true;
+  if (step === 1) {
+    if (!required('exFullName'))   ok = false;
+    if (!required('exPhone'))      ok = false;
+    if (!requiredEmail('exEmail')) ok = false;
+  }
+  if (step === 2) {
+    if (!requiredChip('sessionTypeEx')) ok = false;
+  }
+  if (step === 3) {
+    // step 3 of the existing-client flow IS the shared step-4 therapist/slot picker
+    return validateStep(4);
+  }
+  return ok;
+}
+
+// ── Load therapists (step 4) ───────────────────────────────────
+let therapistsLoaded = false;
+function loadTherapists() {
+  if (therapistsLoaded) { renderTherapists(); return; }
+  therapistsLoaded = true;
+
+  fetch(THERAPISTS_URL)
+    .then(r => r.json())
+    .then(data => { therapistData = data.therapists || []; renderTherapists(); })
+    .catch(() => {
+      document.getElementById('therapist-list').innerHTML =
+        '<p style="font-size:.82rem;color:var(--muted);">Could not load therapists. Please select "Not sure" and our team will be in touch.</p>';
+      renderNotSureCard(true);
+    });
+}
+
+function renderTherapists() {
+  const list = document.getElementById('therapist-list');
+  const grid = document.createElement('div');
+  grid.className = 'therapist-grid';
+
+  // "Not sure" card first
+  const nsCard = makeCard(null, 'notsure');
+  nsCard.innerHTML = `
+    <div class="tc-avatar" style="background:var(--blue-lt);font-size:1.3rem;">?</div>
+    <div class="tc-info">
+      <div class="tc-name">Not sure, let us match you</div>
+      <div class="tc-role">Our team will assign the best fit</div>
+    </div>`;
+  nsCard.onclick = () => selectTherapistCard(null, nsCard, 'notsure');
+  grid.appendChild(nsCard);
+
+  // Individual therapist cards — hide anyone who doesn't see the patient's selected gender
+  const genderPref = chipSelections['gender']; // 'Male' | 'Female' | 'No preference' | undefined
+  const visibleTherapists = (genderPref === 'Male' || genderPref === 'Female')
+    ? therapistData.filter(t => !t.accepts_gender || t.accepts_gender === 'all' || t.accepts_gender === genderPref.toLowerCase())
+    : therapistData;
+
+  visibleTherapists.forEach(t => {
+    const unavailable = !t.slots || filterSlotsForBooking(t.slots).length === 0;
+    const card = makeCard(t.id, unavailable ? 'unavailable' : '');
+    const initials = t.name.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const avatar   = t.photo_url
+      ? `<img src="${t.photo_url}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover;">`
+      : initials;
+    const sessionType = chipSelections['sessionType'] || chipSelections['sessionTypeEx'];
+    const price = sessionType === 'Online' ? t.price_online : t.price_in_person;
+    const priceHtml = price != null ? `<div class="tc-price">EGP ${price}</div>` : '';
+    card.innerHTML = `
+      <div class="tc-avatar">${avatar}</div>
+      <div class="tc-info">
+        <div class="tc-name">${t.name}</div>
+        <div class="tc-role">${t.role || ''}</div>
+        ${priceHtml}
+      </div>`;
+    if (!unavailable) card.onclick = () => selectTherapistCard(t, card, 'specific');
+    grid.appendChild(card);
+  });
+
+  list.innerHTML = '';
+  list.appendChild(grid);
+}
+
+function makeCard(id, extraClass) {
+  const card = document.createElement('div');
+  card.className = 'therapist-card' + (extraClass ? ' ' + extraClass : '');
+  if (id) card.dataset.id = id;
+  return card;
+}
+
+function renderNotSureCard(only) {
+  const list = document.getElementById('therapist-list');
+  if (only) {
+    const card = makeCard(null, 'notsure');
+    card.innerHTML = `<div class="tc-avatar" style="background:var(--blue-lt);font-size:1.3rem;">?</div><div class="tc-info"><div class="tc-name">Not sure, let us match you</div></div>`;
+    card.onclick   = () => selectTherapistCard(null, card, 'notsure');
+    list.innerHTML = '';
+    list.appendChild(card);
+  }
+}
+
+function selectTherapistCard(t, cardEl, mode) {
+  document.querySelectorAll('.therapist-card').forEach(c => c.classList.remove('selected'));
+  cardEl.classList.add('selected');
+  document.getElementById('err-therapist').classList.remove('visible');
+
+  if (mode === 'notsure') {
+    selectedTherapistId   = null;
+    selectedTherapistName = null;
+    selectedSlotDate      = null;
+    selectedSlotTime      = null;
+    selectedSlotLabel     = null;
+    bookingType           = 'manual';
+    chipSelections['therapistChoice'] = 'notsure';
+    document.getElementById('cond-slots').classList.remove('visible');
+    document.getElementById('cond-pref').classList.add('visible');
+  } else {
+    selectedTherapistId   = t.id;
+    selectedTherapistName = t.name;
+    selectedSlotDate      = null;
+    selectedSlotTime      = null;
+    selectedSlotLabel     = null;
+    chipSelections['therapistChoice'] = t.id;
+
+    bookingType = 'auto';
+    document.getElementById('cond-pref').classList.remove('visible');
+    renderSlots(t.slots || []);
+    document.getElementById('cond-slots').classList.add('visible');
+  }
+}
+
+// Filters a therapist's slots down to what actually matches the patient's
+// chosen session type (online vs in-person). Slots without a mode saved
+// default to 'in-person' (pre-existing data).
+function filterSlotsForBooking(slots) {
+  const sessionType = chipSelections['sessionType'] || chipSelections['sessionTypeEx'];
+  const isOnline     = sessionType === 'Online';
+
+  return slots.filter(s => {
+    const mode = s.mode || 'in-person';
+    return isOnline ? mode === 'online' : mode !== 'online';
+  });
+}
+
+function renderSlots(slots) {
+  const container  = document.getElementById('slot-chips');
+  const emptyMsg   = document.getElementById('slots-empty');
+  const filtered   = filterSlotsForBooking(slots);
+
+  container.innerHTML = '';
+  selectedSlotDate   = null;
+  selectedSlotTime   = null;
+  selectedSlotLabel  = null;
+
+  if (!filtered.length) {
+    emptyMsg.style.display = 'block';
+    return;
+  }
+  emptyMsg.style.display = 'none';
+
+  filtered.forEach(slot => {
+    const chip = document.createElement('div');
+    chip.className   = 'slot-chip';
+    chip.textContent = slot.label;
+    chip.onclick = () => {
+      document.querySelectorAll('.slot-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedSlotDate   = slot.date;
+      selectedSlotTime   = slot.time;
+      selectedSlotLabel  = slot.label;
+      document.getElementById('err-slot').classList.remove('visible');
+    };
+    container.appendChild(chip);
+  });
+}
+
+// ── Build review ───────────────────────────────────────────────
+function rv(label, val) {
+  if (!val || val === '-') return '';
+  return `<div class="review-row"><span class="review-label">${label}</span><span class="review-value">${val}</span></div>`;
+}
+function section(title, ...rows) {
+  const content = rows.filter(Boolean).join('');
+  if (!content) return '';
+  return `<div class="review-section"><h4>${title}</h4>${content}</div>`;
+}
+
+function buildReview() {
+  const isOnline  = chipSelections['sessionType'] === 'Online';
+  const isMedYes  = chipSelections['medication']  === 'Yes';
+  const isAuto    = bookingType === 'auto' && selectedTherapistId && selectedSlotDate;
+
+  togglePaymentSection(false, !!selectedTherapistId);
+
+  const html = [
+    section('About You',
+      rv('Name',  v('fullName')),
+      rv('Age',   v('age')),
+      rv('Phone', v('phone')),
+      rv('Email', v('email')),
+    ),
+    section('Your Needs',
+      rv('What brings you in', v('reason')),
+      rv('Had therapy before', chipSelections['prevTherapy']),
+      rv('On medication', chipSelections['medication'] + (isMedYes && v('medicationDetails') ? `, ${v('medicationDetails')}` : '')),
+      rv('Diagnoses', v('diagnoses')),
+      rv('Goals', v('goals')),
+    ),
+    section('Session Preferences',
+      rv('Session type',  chipSelections['sessionType']),
+      isOnline ? rv('Country',   v('country'))   : '',
+      isOnline ? rv('Time zone', v('timezone'))  : '',
+      rv('Gender preference', chipSelections['gender']   || 'No preference'),
+      rv('Language',          chipSelections['language']),
+    ),
+    section('Therapist',
+      isAuto
+        ? rv('Therapist', selectedTherapistName) + rv('Appointment', selectedSlotLabel)
+        : selectedTherapistName
+          ? rv('Therapist', selectedTherapistName) + rv('Scheduling', 'Our team will contact you') +
+            rv('Preferred days',    chipSelections['days']      || '-') +
+            rv('Preferred time',    chipSelections['timeOfDay'] || '-')
+          : rv('Therapist', 'Team will match me') +
+            rv('Preferred days',    chipSelections['days']      || '-') +
+            rv('Preferred time',    chipSelections['timeOfDay'] || '-'),
+    ),
+  ].join('');
+
+  document.getElementById('review-box').innerHTML = html;
+}
+
+function v(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function exV(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function buildExistingReview() {
+  const isAuto   = bookingType === 'auto' && selectedTherapistId && selectedSlotDate;
+  const isOnline = chipSelections['sessionTypeEx'] === 'Online';
+
+  togglePaymentSection(true, !!selectedTherapistId);
+
+  const html = [
+    section('About You',
+      rv('Name',  exV('exFullName')),
+      rv('Phone', exV('exPhone')),
+      rv('Email', exV('exEmail')),
+    ),
+    section('Session',
+      rv('Session type', chipSelections['sessionTypeEx']),
+    ),
+    section('Therapist',
+      isAuto
+        ? rv('Therapist', selectedTherapistName) + rv('Appointment', selectedSlotLabel)
+        : rv('Therapist', selectedTherapistName || 'Team will match me') +
+          rv('Preferred days', chipSelections['days']      || '-') +
+          rv('Preferred time', chipSelections['timeOfDay'] || '-'),
+    ),
+  ].join('');
+
+  document.getElementById('ex-review-box').innerHTML = html;
+}
+
+// ── Payment proof ─────────────────────────────────────────────
+let paymentProofBase64 = null;
+let paymentProofFilename = null;
+
+// Payment is only collected once a specific therapist has been chosen
+// (known price). "Not sure, match me" referrals don't know their price yet.
+function togglePaymentSection(isExisting, paymentRequired) {
+  const prefix = isExisting ? 'ex-' : '';
+  document.getElementById(`${prefix}payment-box-auto`).style.display   = paymentRequired ? 'block' : 'none';
+  document.getElementById(`${prefix}payment-proof-wrap`).style.display = paymentRequired ? 'block' : 'none';
+  document.getElementById(`${prefix}payment-box-manual`).style.display = paymentRequired ? 'none'  : 'block';
+  if (!paymentRequired) document.getElementById(isExisting ? 'err-exPaymentProof' : 'err-paymentProof')?.classList.remove('visible');
+}
+
+function handlePaymentProofChange(event) {
+  const file      = event.target.files[0];
+  const isEx      = event.target.id === 'exPaymentProof';
+  const previewEl = document.getElementById(isEx ? 'exPaymentProofPreview' : 'paymentProofPreview');
+  const errEl     = document.getElementById(isEx ? 'err-exPaymentProof'    : 'err-paymentProof');
+  errEl.classList.remove('visible');
+
+  if (!file) {
+    paymentProofBase64   = null;
+    paymentProofFilename = null;
+    previewEl.innerHTML  = '';
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    paymentProofBase64   = reader.result;
+    paymentProofFilename = file.name;
+    previewEl.innerHTML  = `<img src="${reader.result}" alt="Payment screenshot">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── Submit ─────────────────────────────────────────────────────
+async function submitForm() {
+  const referralOk = requiredChip('referralSource');
+  if (!referralOk) return;
+
+  const isOnline = chipSelections['sessionType'] === 'Online';
+  const isMedYes = chipSelections['medication']  === 'Yes';
+  const isAuto   = bookingType === 'auto' && selectedTherapistId && selectedSlotDate;
+
+  if (selectedTherapistId && !paymentProofBase64) {
+    document.getElementById('err-paymentProof').classList.add('visible');
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  const errEl = document.getElementById('submit-error');
+  btn.disabled   = true;
+  btn.textContent = 'Submitting…';
+  errEl.classList.remove('visible');
+
+  const payload = {
+    // Step 1
+    fullName:   v('fullName'),
+    phone:      v('phone'),
+    email:      v('email'),
+    age:        v('age'),
+    // Step 2
+    reason:     v('reason'),
+    prevTherapy: chipSelections['prevTherapy'],
+    medication:  chipSelections['medication'],
+    medicationDetails: isMedYes ? v('medicationDetails') : null,
+    diagnoses:   v('diagnoses'),
+    goals:       v('goals'),
+    // Step 3
+    sessionType: chipSelections['sessionType'],
+    country:     isOnline ? v('country')   : null,
+    timezone:    isOnline ? v('timezone')  : null,
+    gender:      chipSelections['gender']   || 'No preference',
+    language:    chipSelections['language'],
+    // Step 4
+    bookingType:              isAuto ? 'auto' : 'manual',
+    preferredTherapistId:     selectedTherapistId   || null,
+    preferredTherapistName:   selectedTherapistName || null,
+    bookedDate:               isAuto ? selectedSlotDate      : null,
+    bookedTime:               isAuto ? selectedSlotTime      : null,
+    days:       !isAuto ? chipSelections['days']      : null,
+    timeOfDay:  !isAuto ? chipSelections['timeOfDay'] : null,
+    // Step 5
+    referralSource: chipSelections['referralSource'],
+    extra:          v('extra'),
+    isRebooking:    false,
+    paymentProofBase64,
+    paymentProofFilename,
+  };
+
+  try {
+    const resp = await fetch(SUBMIT_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    });
+    const json = await resp.json();
+
+    if (resp.status === 409) {
+      errEl.textContent = json.message || 'That slot was just booked. Please go back and choose another.';
+      errEl.classList.add('visible');
+      btn.disabled    = false;
+      btn.textContent = 'Submit →';
+      return;
+    }
+    if (!resp.ok) throw new Error(json.error || 'Unknown error');
+
+    showConfirmation(json.confirmed);
+  } catch (err) {
+    errEl.textContent = 'Something went wrong. Please try again or contact us directly.';
+    errEl.classList.add('visible');
+    btn.disabled    = false;
+    btn.textContent = 'Submit →';
+  }
+}
+
+// ── Submit (existing-client rebooking) ──────────────────────────
+async function submitExistingForm() {
+  const isOnline = chipSelections['sessionTypeEx'] === 'Online';
+  const isAuto   = bookingType === 'auto' && selectedTherapistId && selectedSlotDate;
+
+  if (selectedTherapistId && !paymentProofBase64) {
+    document.getElementById('err-exPaymentProof').classList.add('visible');
+    return;
+  }
+
+  const btn   = document.getElementById('ex-btn-submit');
+  const errEl = document.getElementById('ex-submit-error');
+  btn.disabled    = true;
+  btn.textContent = 'Submitting…';
+  errEl.classList.remove('visible');
+
+  const payload = {
+    fullName: exV('exFullName'),
+    phone:    exV('exPhone'),
+    email:    exV('exEmail'),
+    age:      null,
+    reason:   null,
+    prevTherapy: null,
+    medication:  null,
+    medicationDetails: null,
+    diagnoses:   null,
+    goals:       null,
+    sessionType: chipSelections['sessionTypeEx'],
+    country:     null,
+    timezone:    null,
+    gender:      null,
+    language:    null,
+    bookingType:              isAuto ? 'auto' : 'manual',
+    preferredTherapistId:     selectedTherapistId   || null,
+    preferredTherapistName:   selectedTherapistName || null,
+    bookedDate:               isAuto ? selectedSlotDate      : null,
+    bookedTime:               isAuto ? selectedSlotTime      : null,
+    days:      !isAuto ? chipSelections['days']      : null,
+    timeOfDay: !isAuto ? chipSelections['timeOfDay'] : null,
+    referralSource: null,
+    extra:          null,
+    isRebooking:    true,
+    paymentProofBase64,
+    paymentProofFilename,
+  };
+
+  try {
+    const resp = await fetch(SUBMIT_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    });
+    const json = await resp.json();
+
+    if (resp.status === 409) {
+      errEl.textContent = json.message || 'That slot was just booked. Please go back and choose another.';
+      errEl.classList.add('visible');
+      btn.disabled    = false;
+      btn.textContent = 'Submit →';
+      return;
+    }
+    if (!resp.ok) throw new Error(json.error || 'Unknown error');
+
+    showConfirmation(json.confirmed);
+  } catch (err) {
+    errEl.textContent = 'Something went wrong. Please try again or contact us directly.';
+    errEl.classList.add('visible');
+    btn.disabled    = false;
+    btn.textContent = 'Submit →';
+  }
+}
+
+function showConfirmation(isConfirmed) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('ex-progress-wrap').style.display = 'none';
+
+  const conf = document.getElementById('confirmation');
+  conf.classList.add('active');
+
+  if (isConfirmed) {
+    document.getElementById('conf-icon').textContent  = '✓';
+    document.getElementById('conf-title').textContent = 'Your session is confirmed!';
+    document.getElementById('conf-body').textContent  =
+      `Your appointment with ${selectedTherapistName} on ${selectedSlotLabel} has been booked. You will receive a confirmation email with all the details shortly.`;
+  } else {
+    document.getElementById('conf-icon').textContent  = '✓';
+    document.getElementById('conf-title').textContent = 'Thank you!';
+    document.getElementById('conf-body').textContent  =
+      'Your information has been received. Our team will review it and reach out to confirm your appointment shortly.';
+  }
+}
+</script>
+</body>
+</html>

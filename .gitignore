@@ -4,3 +4,5 @@
 .playwright-mcp/
 node_modules/
 _raw/
+docs/
+.env*
