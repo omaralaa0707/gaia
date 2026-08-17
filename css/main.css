@@ -101,22 +101,24 @@ body::before {
   position: absolute; inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(30,24,20,.52) 0%,
-    rgba(30,24,20,.38) 40%,
-    rgba(30,24,20,.62) 100%
+    rgba(20,16,13,.62) 0%,
+    rgba(20,16,13,.5) 40%,
+    rgba(20,16,13,.68) 100%
   );
 }
 
 .hero-content { position: relative; z-index: 3; padding: 0 8vw; max-width: 660px; }
 
-/* Override text colors for dark hero */
-#hero .hero-eyebrow { color: rgba(245,239,228,.65); }
-#hero .hero-eyebrow::before { background: rgba(245,239,228,.45); }
-#hero .hero-title { color: var(--cream); }
+/* Override text colors for dark hero. Video content brightness varies frame to
+   frame, so a text-shadow (not just the overlay above) keeps text legible even
+   over lighter patches. */
+#hero .hero-eyebrow { color: rgba(245,239,228,.75); text-shadow: 0 1px 10px rgba(0,0,0,.5); }
+#hero .hero-eyebrow::before { background: rgba(245,239,228,.5); }
+#hero .hero-title { color: var(--cream); text-shadow: 0 2px 16px rgba(0,0,0,.55); }
 #hero .hero-title em { color: var(--blush); }
-#hero .hero-sub { color: rgba(245,239,228,.7); }
-#hero .stat-num { color: var(--cream); }
-#hero .stat-label { color: rgba(245,239,228,.55); }
+#hero .hero-sub { color: rgba(245,239,228,.85); text-shadow: 0 1px 12px rgba(0,0,0,.5); }
+#hero .stat-num { color: var(--cream); text-shadow: 0 1px 10px rgba(0,0,0,.5); }
+#hero .stat-label { color: rgba(245,239,228,.7); text-shadow: 0 1px 8px rgba(0,0,0,.5); }
 #hero .stat-divider { background: rgba(245,239,228,.2); }
 #hero .btn-ghost { color: var(--cream); border-color: rgba(245,239,228,.35); }
 #hero .btn-ghost:hover { border-color: var(--cream); }
@@ -347,6 +349,7 @@ body::before {
 
 /* ── TESTIMONIALS ── */
 #testimonials { background: var(--parchment); text-align: center; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
 
 /* ── CONTACT ── */
 #contact { background: var(--cream); }
@@ -360,6 +363,8 @@ footer { background: var(--warm); color: rgba(245,239,228,.5); padding: 3.5rem 7
 .footer-links a { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(245,239,228,.42); text-decoration: none; transition: color .2s; }
 .footer-links a:hover { color: rgba(245,239,228,.82); }
 .footer-copy { font-size: .7rem; letter-spacing: .05em; }
+.footer-admin-link { color: rgba(245,239,228,.22); text-decoration: none; margin-left: .8rem; transition: color .3s; }
+.footer-admin-link:hover { color: rgba(245,239,228,.55); }
 
 .footer-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2.8rem; }
 .footer-branch-label { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(245,239,228,.4); margin-bottom: .5rem; }
@@ -387,6 +392,7 @@ footer { background: var(--warm); color: rgba(245,239,228,.5); padding: 3.5rem 7
 @media (max-width: 1024px) {
   .team-grid { grid-template-columns: repeat(3, 1fr); }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .testimonials-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 }
 @media (max-width: 768px) {
   /* Nav */
@@ -422,7 +428,7 @@ footer { background: var(--warm); color: rgba(245,239,228,.5); padding: 3.5rem 7
   .methods-grid { grid-template-columns: 1fr 1fr; }
 
   /* Testimonials */
-  #testimonials > div > div[style*="repeat(3"] { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 1.2rem; }
 
   /* Contact */
   #contact > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
