@@ -18,6 +18,7 @@ import { initTestimonials } from './sections/testimonials.js';
 import { initContact } from './sections/contact.js';
 import { initDividers } from './sections/dividers.js';
 import { initCursor } from './fx/cursor.js';
+import { initAmbient } from './fx/ambient.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -34,6 +35,7 @@ initNav();
 initVideos();
 initReveals();
 initTeamModal();
+initAmbient();
 
 // Section showpieces live inside matchMedia branches so crossing the 1024px
 // breakpoint or toggling OS motion settings cleanly re-initializes them.
