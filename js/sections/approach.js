@@ -8,7 +8,7 @@ import { flags } from '../core/flags.js';
 import { splitLines } from '../fx/text.js';
 
 const FRAME_COUNT = 120;
-const FRAME_URL = (i) => `assets/video/scrub/frames/f-${String(i + 1).padStart(3, '0')}.webp`;
+const FRAME_URL = (i) => `assets/video/scrub/frames/f-${String(i + 1).padStart(3, '0')}.webp?v=2`;
 
 export function initApproach({ isDesktop, reduced } = {}) {
   const section = document.getElementById('approach');
@@ -22,7 +22,7 @@ export function initApproach({ isDesktop, reduced } = {}) {
   // Reduced motion → static poster background, content already visible.
   if (reduced) {
     section.classList.add('has-scrub');
-    addLayer(section, 'img', { className: 'scrub-fallback', src: 'assets/video/scrub/scrub-poster.jpg', alt: '' });
+    addLayer(section, 'img', { className: 'scrub-fallback', src: 'assets/video/scrub/scrub-poster.jpg?v=2', alt: '' });
     addDim(section);
     return;
   }
@@ -37,11 +37,11 @@ export function initApproach({ isDesktop, reduced } = {}) {
     section.classList.add('has-scrub');
     const v = addLayer(section, 'video', { className: 'scrub-fallback' });
     v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none';
-    v.poster = 'assets/video/scrub/scrub-poster.jpg';
+    v.poster = 'assets/video/scrub/scrub-poster.jpg?v=2';
     // Save-data → poster only; otherwise load the ambient loop (media manager
     // already ran, so wire this one up directly).
     if (!flags.saveData) {
-      v.src = 'assets/video/scrub/scrub-loop-720.mp4';
+      v.src = 'assets/video/scrub/scrub-loop-720.mp4?v=2';
       v.load();
       const p = v.play(); if (p) p.catch(() => {});
     }

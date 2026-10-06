@@ -27,7 +27,7 @@ export function initServices({ isDesktop, reduced } = {}) {
   const video = document.createElement('video');
   video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'none';
   video.setAttribute('aria-hidden', 'true');
-  video.poster = 'assets/video/services/texture-poster.jpg';
+  video.poster = 'assets/video/services/texture-poster.jpg?v=2';
   const introContent = document.createElement('div');
   introContent.className = 'intro-content';
   if (header) introContent.append(...header.childNodes);
@@ -45,7 +45,7 @@ export function initServices({ isDesktop, reduced } = {}) {
   if (header) header.remove();
 
   // Eager-load the small intro texture (always on-screen while pinned).
-  video.src = 'assets/video/services/texture-540.mp4';
+  video.src = 'assets/video/services/texture-540.mp4?v=2';
   video.load();
   const tryPlay = () => { const p = video.play(); if (p) p.catch(() => {}); };
   tryPlay();

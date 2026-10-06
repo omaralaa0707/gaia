@@ -51,8 +51,6 @@ html.is-booting #preloader {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center;
   will-change: transform;
-  /* Vibrancy lift: same subtle, warm grade - just richer color and light. */
-  filter: saturate(1.4) contrast(1.07) brightness(1.06);
 }
 .hero-bg-photo { will-change: transform; }
 
@@ -68,7 +66,6 @@ html.is-booting #preloader {
   position: absolute; left: 0; top: -15%;
   width: 100%; height: 130%;
   object-fit: cover; will-change: transform;
-  filter: saturate(1.45) contrast(1.08) brightness(1.08);
 }
 .divider-band::after {
   content: ''; position: absolute; inset: 0;
@@ -110,7 +107,6 @@ html.is-booting #preloader {
   .track-intro video, .track-intro .intro-poster {
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: 0;
-    filter: saturate(1.4) contrast(1.06) brightness(1.06);
   }
   .track-intro::after {
     content: ''; position: absolute; inset: 0;
@@ -138,9 +134,8 @@ html.is-booting #preloader {
 .scrub-canvas {
   position: absolute; inset: 0; width: 100%; height: 100%;
   z-index: 0;
-  filter: saturate(1.4) contrast(1.06) brightness(1.06);
   /* poster shows under the canvas until the first frames decode */
-  background: #2a221c url('../assets/video/scrub/scrub-poster.jpg') center / cover no-repeat;
+  background: #2a221c url('../assets/video/scrub/scrub-poster.jpg?v=2') center / cover no-repeat;
 }
 @media (min-width: 1024px) {
   #approach.has-scrub { min-height: 100vh; display: flex; align-items: center; }
@@ -148,7 +143,6 @@ html.is-booting #preloader {
 .scrub-fallback {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; z-index: 0;
-  filter: saturate(1.4) contrast(1.06) brightness(1.06);
 }
 #approach.has-scrub { z-index: 1; }
 #approach.has-scrub .scrub-dim {
@@ -166,7 +160,6 @@ html.is-booting #preloader {
 .contact-video, .contact-video-poster {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; z-index: 0; opacity: .27;
-  filter: saturate(1.45) contrast(1.06) brightness(1.08);
 }
 #contact > div { position: relative; z-index: 2; }
 

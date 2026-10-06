@@ -69,6 +69,11 @@ body::before {
 }
 .nav-cta:hover { background: var(--olive) !important; transform: translateY(-1px); }
 
+/* Over the dark hero video the links need light text until the navbar turns solid. */
+#navbar:not(.scrolled) .nav-links a:not(.nav-cta) { color: var(--cream); opacity: .85; text-shadow: 0 1px 10px rgba(0,0,0,.45); }
+#navbar:not(.scrolled) .nav-links a:not(.nav-cta):hover { opacity: 1; }
+#navbar:not(.scrolled) .hamburger span { background: var(--cream); }
+
 /* ── HAMBURGER ── */
 .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
 .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--warm); transition: transform .25s, opacity .25s; }
@@ -286,8 +291,9 @@ body::before {
 .team-photo-wrap .photo-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center center; transform: scale(1.2);
-  filter: blur(18px) saturate(.82) sepia(.03) brightness(.85);
 }
+/* Local photos use a tiny pre-blurred backdrop (no runtime blur). Hotlinked ones still need it. */
+.team-photo-wrap .photo-bg[src^="http"] { filter: blur(18px) saturate(.82) sepia(.03) brightness(.85); }
 .team-photo-wrap .photo-fg {
   position: relative; width: 100%; height: 100%; object-fit: contain; object-position: center center;
   filter: saturate(.82) sepia(.03); transition: transform .5s, filter .4s;
@@ -370,6 +376,13 @@ footer { background: var(--warm); color: rgba(245,239,228,.5); padding: 3.5rem 7
 .footer-branch-label { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(245,239,228,.4); margin-bottom: .5rem; }
 .footer-branch-address { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--cream); text-decoration: none; margin-bottom: 1rem; transition: color .2s; }
 .footer-branch-address:hover { color: var(--blush); }
+.map-facade { width: 100%; height: 180px; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer;
+  background: linear-gradient(135deg, rgba(245,239,228,.08), rgba(245,239,228,.03)), repeating-linear-gradient(45deg, rgba(245,239,228,.04) 0 12px, transparent 12px 24px);
+  border: 1px solid rgba(245,239,228,.12); transition: border-color .2s, background-color .2s; }
+.map-facade span { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(245,239,228,.6); }
+.map-facade:hover { border-color: rgba(245,239,228,.3); }
+.map-facade:hover span { color: var(--cream); }
+.map-facade:focus-visible { outline: 2px solid var(--blush); outline-offset: 3px; }
 .footer-branches iframe { width: 100%; height: 180px; border: 0; border-radius: 4px; filter: grayscale(.2) contrast(1.05); }
 
 @media (max-width: 720px) {
