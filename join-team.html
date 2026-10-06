@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Our Team | Gaia</title>
+  <meta name="description" content="Work with Gaia. We're always looking for compassionate, skilled clinicians and operations professionals to join our team in Egypt." />
+  <link rel="icon" type="image/jpeg" href="brand-assets/logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/careers.css" />
+  <script type="module" src="js/careers.js"></script>
+</head>
+<body class="careers-page">
+
+<!-- NAV -->
+<nav id="navbar" class="scrolled">
+  <a href="index.html" aria-label="Gaia home"><img src="brand-assets/logo.jpg" alt="Gaia" class="nav-logo" /></a>
+  <div class="nav-links">
+    <a href="index.html#about">About</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#team">Our Team</a>
+    <a href="join-team.html" aria-current="page" style="opacity:1;">Join Our Team</a>
+    <a href="book.html" class="nav-cta">Book a Session</a>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div id="mobile-menu">
+  <a href="index.html#about">About</a>
+  <a href="index.html#services">Services</a>
+  <a href="index.html#team">Our Team</a>
+  <a href="join-team.html">Join Our Team</a>
+  <a href="book.html">Book a Session</a>
+</div>
+
+<main>
+  <!-- HEADER -->
+  <header class="careers-hero">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>Join Our Team</span></nav>
+    <div class="section-label">Careers</div>
+    <h1>Work <em>with us.</em></h1>
+    <p>Gaia is a therapy and wellbeing center in Egypt, and we're always looking for compassionate, skilled professionals to join us. Whether you work in clinical care or operations, you'll be part of a community dedicated to meaningful mental health support.</p>
+  </header>
+
+  <section class="careers-body">
+    <div class="careers-main">
+
+      <!-- DEPARTMENT TABS -->
+      <div class="dept-tabs" role="tablist" aria-label="Department">
+        <button type="button" role="tab" id="tab-clinical" class="dept-tab active" aria-selected="true" aria-controls="panel-clinical" data-dept="Psychology & Therapy">Psychology &amp; Therapy</button>
+        <button type="button" role="tab" id="tab-admin" class="dept-tab" aria-selected="false" aria-controls="panel-admin" data-dept="Administrative" tabindex="-1">Administrative</button>
+      </div>
+
+      <form id="career-form" novalidate>
+        <input type="hidden" name="Department" value="Psychology & Therapy" />
+        <!-- Honeypot: real people never see or fill this -->
+        <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+        <!-- CLINICAL ROLES -->
+        <div id="panel-clinical" class="role-panel" role="tabpanel" aria-labelledby="tab-clinical">
+          <p class="panel-intro">We welcome applications from licensed psychologists, therapists, counselors, psychiatrists, and other mental health professionals. Select the role that best fits your background.</p>
+          <fieldset class="role-grid">
+            <legend class="sr-only">Clinical role</legend>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Clinical Psychologist" /><span class="role-name">Clinical Psychologist</span><span class="role-desc">Individual &amp; group therapy across a range of presentations</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Counseling Psychologist" /><span class="role-name">Counseling Psychologist</span><span class="role-desc">Supportive counseling, life transitions, wellbeing</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Psychiatrist" /><span class="role-name">Psychiatrist</span><span class="role-desc">Diagnostic assessment, medication management</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Psychotherapist" /><span class="role-name">Psychotherapist</span><span class="role-desc">CBT, psychodynamic, integrative, or other modalities</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Child & Adolescent Specialist" /><span class="role-name">Child &amp; Adolescent Specialist</span><span class="role-desc">Play therapy, developmental concerns, school-related issues</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Speech & Language Therapist" /><span class="role-name">Speech &amp; Language Therapist</span><span class="role-desc">Articulation, language development, AAC</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Assessment Specialist" /><span class="role-name">Assessment Specialist</span><span class="role-desc">Psychoeducational and diagnostic assessment</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Other Clinical Role" /><span class="role-name">Other Clinical Role</span><span class="role-desc">Not listed above? Tell us about your specialization</span></label>
+          </fieldset>
+        </div>
+
+        <!-- ADMINISTRATIVE ROLES -->
+        <div id="panel-admin" class="role-panel" role="tabpanel" aria-labelledby="tab-admin" hidden>
+          <p class="panel-intro">We're looking for organized, warm, and professional individuals to support our front-of-house and back-office operations. Select the role that best fits your background.</p>
+          <fieldset class="role-grid" disabled>
+            <legend class="sr-only">Administrative role</legend>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Receptionist / Front Desk" /><span class="role-name">Receptionist / Front Desk</span><span class="role-desc">Client-facing role, scheduling, and first-contact support</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Patient Coordinator" /><span class="role-name">Patient Coordinator</span><span class="role-desc">Intake coordination, referrals, and client follow-up</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Operations & Administration" /><span class="role-name">Operations &amp; Administration</span><span class="role-desc">Back-office support, HR, and internal processes</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Marketing & Communications" /><span class="role-name">Marketing &amp; Communications</span><span class="role-desc">Social media, content, and community outreach</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Finance & Billing" /><span class="role-name">Finance &amp; Billing</span><span class="role-desc">Invoicing, insurance, and accounts management</span></label>
+            <label class="role-card"><input type="radio" name="Role Applied For" value="Other Administrative Role" /><span class="role-name">Other Administrative Role</span><span class="role-desc">Not listed above? Tell us about your background</span></label>
+          </fieldset>
+        </div>
+        <p class="field-error" id="err-role" role="alert" hidden>Please select the role you're applying for.</p>
+
+        <!-- APPLICATION -->
+        <div class="app-card">
+          <h2>Your Application</h2>
+          <p class="applying-for" id="applying-for" hidden>Applying for <strong id="applying-role"></strong></p>
+
+          <div class="field">
+            <label for="f-name">Full name <span aria-hidden="true">*</span></label>
+            <input id="f-name" name="Full Name" type="text" autocomplete="name" required />
+            <p class="field-error" hidden></p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-email">Email address <span aria-hidden="true">*</span></label>
+              <input id="f-email" name="Email" type="email" autocomplete="email" required />
+              <p class="field-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone number <span aria-hidden="true">*</span></label>
+              <input id="f-phone" name="Phone" type="tel" autocomplete="tel" required />
+              <p class="field-error" hidden></p>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-letter">Cover letter <span aria-hidden="true">*</span></label>
+            <textarea id="f-letter" name="Cover Letter" rows="6" required placeholder="Tell us a little about yourself, your training, and why Gaia."></textarea>
+            <p class="field-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="f-cv">Upload CV <span aria-hidden="true">*</span></label>
+            <label class="file-drop" id="file-drop" for="f-cv">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>
+              <span id="file-name">Choose a file or drag it here</span>
+            </label>
+            <input id="f-cv" name="CV" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="sr-only" required />
+            <p class="hint">PDF or Word document, max 4 MB</p>
+            <p class="field-error" hidden></p>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submit-btn">
+            <span class="btn-label">Submit Application</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
+        </div>
+      </form>
+
+      <!-- SUCCESS -->
+      <div class="success-card" id="success" hidden tabindex="-1">
+        <div class="success-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h2>Thank you for applying.</h2>
+        <p>Your application has reached our team. We read every one personally and will be in touch if there's a good fit.</p>
+        <a href="index.html" class="btn-ghost-dark">Back to home</a>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="careers-side">
+      <div class="side-card">
+        <h2>Why join Gaia?</h2>
+        <ul class="perks">
+          <li>Calm, thoughtfully designed centers in Sheikh Zayed and District 5</li>
+          <li>Multidisciplinary, collaborative team</li>
+          <li>Continued professional development</li>
+          <li>Meaningful, impact-driven work</li>
+        </ul>
+      </div>
+      <div class="side-card">
+        <h2>Questions?</h2>
+        <p>Reach out to us directly.</p>
+        <a class="side-link" href="mailto:youaregaia.eg@gmail.com">youaregaia.eg@gmail.com</a>
+        <a class="side-link" href="https://wa.me/201004636683" target="_blank" rel="noopener">WhatsApp +20 100 463 6683</a>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <img src="brand-assets/logo.jpg" alt="Gaia" class="footer-logo" />
+    <div class="footer-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#team">Team</a>
+      <a href="join-team.html">Join Our Team</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2024 Gaia Wellbeing, Egypt. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>

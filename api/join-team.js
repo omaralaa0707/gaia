@@ -4,14 +4,11 @@ const { formidable } = require('formidable');
 
 // Public endpoint - no auth required.
 // Receives a job application (with CV attachment) and emails it via nodemailer.
-//
-// NOTE(owner): ported for parity with ACPP's careers flow, but Gaia's
-// marketing site has no join-our-team.html form yet to submit to this
-// endpoint. This is a no-op until that page exists - let me know if you
-// want a careers page built for Gaia too.
+// Submitted from join-team.html.
 
-const RECIPIENT = 'PLACEHOLDER@gmail.com'; // TODO(owner): who receives applications
-const MAX_CV_BYTES = 10 * 1024 * 1024; // 10 MB
+const RECIPIENT = 'youaregaia.eg@gmail.com';
+// Vercel functions reject request bodies over 4.5 MB, so 4 MB is the real ceiling.
+const MAX_CV_BYTES = 4 * 1024 * 1024;
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -43,8 +40,11 @@ module.exports = async function handler(req, res) {
   if (!cvFile) {
     return res.status(400).json({ error: 'A CV file is required.' });
   }
+  if (!/\.(pdf|docx?)$/i.test(cvFile.originalFilename || '')) {
+    return res.status(400).json({ error: 'CV must be a PDF or Word document.' });
+  }
   if (cvFile.size > MAX_CV_BYTES) {
-    return res.status(400).json({ error: 'CV file is too large (max 10 MB).' });
+    return res.status(400).json({ error: 'CV file is too large (max 4 MB).' });
   }
 
   const m = mailer();

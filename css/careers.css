@@ -1,0 +1,105 @@
+/* Careers page - extends main.css tokens and nav/footer. */
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+[hidden] { display: none !important; }
+
+.careers-hero { padding: 9.5rem 7vw 3.5rem; max-width: 980px; }
+.breadcrumb { display: flex; gap: .6rem; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--taupe); margin-bottom: 2.4rem; }
+.breadcrumb a { color: var(--taupe); text-decoration: none; transition: color .2s; }
+.breadcrumb a:hover { color: var(--warm); }
+.section-label { display: flex; align-items: center; gap: .8rem; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--olive); margin-bottom: 1.2rem; }
+.section-label::before { content: ''; width: 30px; height: 1px; background: var(--olive); }
+.careers-hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.8rem, 6vw, 5.2rem); line-height: 1.02; letter-spacing: -.025em; margin-bottom: 1.6rem; }
+.careers-hero h1 em { font-style: italic; color: var(--olive); }
+.careers-hero p { font-size: .95rem; line-height: 1.88; color: var(--taupe); max-width: 620px; }
+
+.careers-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 4rem; padding: 1rem 7vw 6rem; align-items: start; }
+
+/* Tabs */
+.dept-tabs { display: inline-flex; gap: .3rem; padding: .3rem; background: var(--parchment); border-radius: 4px; margin-bottom: 1.8rem; }
+.dept-tab { padding: .8rem 1.5rem; border-radius: 3px; font-size: .72rem; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; color: var(--taupe); transition: background .2s, color .2s; }
+.dept-tab:hover { color: var(--warm); }
+.dept-tab.active { background: var(--warm); color: var(--cream); }
+.dept-tab:focus-visible, .role-card:has(input:focus-visible), .file-drop:has(+ input:focus-visible), .btn-submit:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
+
+.panel-intro { font-size: .9rem; line-height: 1.8; color: var(--taupe); max-width: 620px; margin-bottom: 1.6rem; }
+
+/* Role cards */
+.role-grid { border: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; min-width: 0; }
+.role-card { position: relative; display: flex; flex-direction: column; gap: .35rem; padding: 1.3rem 1.4rem; background: #FAF6EE; border: 1.5px solid rgba(61,53,48,.1); border-radius: 4px; cursor: pointer; transition: border-color .2s, background .2s, transform .2s, box-shadow .2s; }
+.role-card:hover { border-color: rgba(107,99,73,.5); transform: translateY(-1px); }
+.role-card input { position: absolute; opacity: 0; pointer-events: none; }
+.role-card::after { content: ''; position: absolute; top: 1.2rem; right: 1.2rem; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid rgba(61,53,48,.25); transition: all .2s; }
+.role-card:has(input:checked) { background: var(--warm); border-color: var(--warm); box-shadow: 0 10px 30px rgba(61,53,48,.18); }
+.role-card:has(input:checked)::after { border-color: var(--blush); background: radial-gradient(circle, var(--blush) 40%, transparent 45%); }
+.role-name { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 500; line-height: 1.2; padding-right: 1.6rem; }
+.role-desc { font-size: .8rem; line-height: 1.6; color: var(--taupe); }
+.role-card:has(input:checked) .role-name { color: var(--cream); }
+.role-card:has(input:checked) .role-desc { color: rgba(245,239,228,.7); }
+
+/* Application form */
+.app-card { margin-top: 2.4rem; padding: 2.4rem; background: #FAF6EE; border: 1px solid rgba(61,53,48,.08); border-radius: 6px; }
+.app-card h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.9rem; margin-bottom: .4rem; }
+.applying-for { font-size: .82rem; color: var(--taupe); margin-bottom: 1rem; }
+.applying-for strong { font-weight: 500; color: var(--olive); }
+.field { display: flex; flex-direction: column; gap: .45rem; margin-top: 1.3rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.field label:not(.file-drop) { font-size: .66rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--olive); }
+.field input:not([type=file]), .field textarea { width: 100%; padding: .85rem 1rem; font-size: .92rem; background: var(--cream); border: 1.5px solid rgba(107,99,73,.2); border-radius: 3px; outline: none; transition: border-color .2s, background .2s; }
+.field textarea { resize: vertical; min-height: 140px; line-height: 1.7; }
+.field input:not([type=file]):focus, .field textarea:focus { border-color: var(--olive); background: #fff; }
+.field.invalid input:not([type=file]), .field.invalid textarea, .field.invalid .file-drop { border-color: #a4452c; }
+.field-error { font-size: .76rem; color: #a4452c; margin-top: .1rem; }
+#err-role { margin-top: 1rem; }
+.hint { font-size: .74rem; color: var(--taupe); }
+
+.file-drop { display: flex; align-items: center; gap: .9rem; padding: 1.1rem 1.2rem; background: var(--cream); border: 1.5px dashed rgba(107,99,73,.4); border-radius: 3px; cursor: pointer; font-size: .88rem; color: var(--taupe); transition: border-color .2s, background .2s; }
+.file-drop svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--olive); }
+.file-drop:hover, .file-drop.drag { border-color: var(--olive); background: #fff; }
+.file-drop.has-file { color: var(--warm); border-style: solid; }
+
+.btn-submit { display: inline-flex; align-items: center; gap: .8rem; margin-top: 2rem; padding: 1rem 2rem; background: var(--warm); color: var(--cream); border-radius: 2px; font-size: .74rem; font-weight: 400; letter-spacing: .18em; text-transform: uppercase; transition: background .2s, transform .15s; }
+.btn-submit:hover:not(:disabled) { background: var(--olive); transform: translateY(-1px); }
+.btn-submit:disabled { opacity: .6; cursor: progress; }
+.btn-submit svg { width: 16px; height: 16px; }
+.form-status { margin-top: 1rem; font-size: .84rem; color: #a4452c; }
+
+/* Success */
+.success-card { padding: 4rem 2.4rem; text-align: center; background: #FAF6EE; border: 1px solid rgba(61,53,48,.08); border-radius: 6px; }
+.success-mark { width: 56px; height: 56px; margin: 0 auto 1.4rem; border-radius: 50%; background: var(--olive); color: var(--cream); display: flex; align-items: center; justify-content: center; }
+.success-mark svg { width: 26px; height: 26px; }
+.success-card h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2.2rem; margin-bottom: .8rem; }
+.success-card p { max-width: 440px; margin: 0 auto 2rem; font-size: .92rem; line-height: 1.8; color: var(--taupe); }
+.btn-ghost-dark { display: inline-block; padding: .85rem 1.8rem; border: 1.5px solid rgba(61,53,48,.3); border-radius: 2px; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--warm); text-decoration: none; transition: border-color .2s, background .2s; }
+.btn-ghost-dark:hover { border-color: var(--warm); background: rgba(61,53,48,.04); }
+
+/* Sidebar */
+.careers-side { display: flex; flex-direction: column; gap: 1.2rem; position: sticky; top: 6.5rem; }
+.side-card { padding: 1.9rem; background: var(--warm); color: var(--cream); border-radius: 6px; }
+.side-card h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.5rem; margin-bottom: 1rem; }
+.side-card p { font-size: .84rem; color: rgba(245,239,228,.65); margin-bottom: .8rem; }
+.perks { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
+.perks li { position: relative; padding-left: 1.5rem; font-size: .86rem; line-height: 1.6; color: rgba(245,239,228,.8); }
+.perks li::before { content: '✦'; position: absolute; left: 0; color: var(--blush); font-size: .7rem; top: .2rem; }
+.side-link { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--cream); text-decoration: none; padding: .35rem 0; transition: color .2s; overflow-wrap: anywhere; }
+.side-link:hover { color: var(--blush); }
+
+.careers-page footer { padding-top: 2.5rem; }
+
+@media (max-width: 960px) {
+  .careers-body { grid-template-columns: 1fr; gap: 2.5rem; }
+  .careers-side { position: static; }
+}
+@media (max-width: 768px) {
+  .careers-hero { padding: 7.5rem 1.4rem 2.5rem; }
+  .careers-body { padding: 1rem 1.2rem 5rem; }
+  .role-grid, .field-row { grid-template-columns: 1fr; }
+  .dept-tabs { display: flex; width: 100%; }
+  .dept-tab { flex: 1; padding: .8rem .4rem; font-size: .66rem; letter-spacing: .1em; }
+  .app-card { padding: 1.6rem 1.2rem; }
+  .btn-submit { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .role-card, .btn-submit, .dept-tab { transition: none; }
+}
